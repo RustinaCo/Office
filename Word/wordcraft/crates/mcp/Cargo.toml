@@ -1,0 +1,17 @@
+[package]
+name = "wordcraft-mcp"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+description = "WordCraft MCP server: every command as a tool, headless or bridged to the running app"
+
+[lints]
+workspace = true
+
+[dependencies]
+wordcraft-doc = { workspace = true }
+wordcraft-engine = { workspace = true }
+wordcraft-render = { workspace = true }
+wordcraft-control-key = { workspace = true }
+serde_json = { workspace = true }
+log = { workspace = true }

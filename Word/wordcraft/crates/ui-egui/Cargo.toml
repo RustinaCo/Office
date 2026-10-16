@@ -1,0 +1,46 @@
+[package]
+name = "wordcraft-ui-egui"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+description = "WordCraft egui front end (Word-style ribbon UI); swappable: nothing below depends on it"
+
+[lints]
+workspace = true
+
+[dependencies]
+craft-ui = { git = "https://github.com/storytold/craft-libs", rev = "d27646a5f7c8b4fc85d9dd3213b8c88b58e0088d" }
+wordcraft-geom = { workspace = true }
+wordcraft-doc = { workspace = true }
+wordcraft-fonts = { workspace = true }
+wordcraft-layout = { workspace = true }
+wordcraft-render = { workspace = true }
+wordcraft-engine = { workspace = true }
+wordcraft-zotero = { workspace = true }
+egui = { workspace = true }
+serde = { workspace = true }
+serde_json = { workspace = true }
+log = { workspace = true }
+# Pictures pasted from the system clipboard arrive as pixels and are inserted as PNG (#45).
+image = { workspace = true }
+# The system's preferred interface languages (#8) and region (#838). Native: OS APIs; wasm:
+# the browser's languages (`js`).
+sys-locale = { version = "0.3", features = ["js"] }
+
+# Linux only, where winit reports no system theme: the desktop portal's light/dark answer (see
+# `desktop_theme.rs`). Already in the tree, with these features, through egui's own accessibility
+# bus; pinned to one version so nothing is built twice.
+[target.'cfg(target_os = "linux")'.dependencies]
+zbus = "=5.19.0"
+
+[target.'cfg(target_arch = "wasm32")'.dependencies]
+# The browser clock (`SystemTime::now()`/`Instant::now()` panic on wasm32).
+js-sys = "0.3"
+
+[dev-dependencies]
+egui_kittest = { workspace = true, features = ["wgpu", "snapshot"] }
+zip = { workspace = true }
+
+[build-dependencies]
+serde_json = { workspace = true }
+toml = "1"

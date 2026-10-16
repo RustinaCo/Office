@@ -1,0 +1,160 @@
+# DeckCraft roadmap
+
+**Stage: alpha** · next: beta, ~20 points and ~120–210 h away
+
+> **Last reviewed:** 2026-10-10 · **Last updated:** 2026-10-10 · **Change:** minor (hours to ~95% per audience added; ready 56% → 55%; stage stays alpha; previous: major, full re-measure against PowerPoint for Mac 16.113.4; restructured to the craftrules progress-docs standard) · **Target:** Microsoft PowerPoint for Mac 16.113 (Microsoft 365)
+
+DeckCraft aims at full PowerPoint parity, and to be better: faster, open (a documented zip+JSON
+format plus PPTX), scriptable by agents (CLI, JSON control channel, MCP), and available everywhere
+(macOS, Windows, Linux, BSD and the web). This page is the summary; the detail is in
+[docs/target-app-parity.md](docs/target-app-parity.md) and the work list in
+[docs/gaps.md](docs/gaps.md).
+
+## Headline numbers
+
+| | Value | Kind |
+|---|---|---|
+| **Feature breadth** | **79%** weighted over 191 PowerPoint features (P0 92%, P1 75%, P2 36%) | measured: `cargo xtask parity` over [docs/parity-checklist.md](docs/parity-checklist.md) |
+| Menu-bar coverage | 59% of 217 app-specific PowerPoint menu items matched by name (lower bound) | measured: script over the PowerPoint menu dump and the 226 commands |
+| **Ready for real work** | **~55%** | estimated: weighted dimensions below |
+| Mainstream practitioner | ~53% | estimated: weekly-use areas × discounts for interaction (×0.92), stability (×0.92) and `.pptx` exchange (×0.88), [method](docs/target-app-parity.md#mainstream-practitioner-and-essentials-user) |
+| Essentials user | ~62% | estimated: core features × discounts for launch (×0.90), clarity (×0.95) and opening received files (×0.90), [method](docs/target-app-parity.md#mainstream-practitioner-and-essentials-user) |
+| Hours to beta | **~120–210** Opus 5.5 agent hours (~40–70 h with 3–4 agents) | estimated, [docs/roadmap.md](docs/roadmap.md) |
+| Hours to full parity | **~365–650** Opus 5.5 agent hours | estimated, [docs/target-app-parity.md](docs/target-app-parity.md) |
+
+### Readiness by audience
+
+| Audience | Ready | Opus 5.5 agent hours to ~95% | Work that dominates |
+|---|---:|---|---|
+| Full target (ready for real work) | ~55% | 340–600 (~60% parallelizes: ~120–210 h wall clock with 3–4 agents) | Feature depth across all 20 areas, legacy `.ppt`/`.odp` and video export, localization in 11+ languages, GPU raster and hardware decode, AI features |
+| Mainstream practitioner | ~53% | 150–250 (~50% parallelizes: ~70–120 h with 3 agents) | `.pptx` exchange (real-deck corpus, round-trip losses, EMF/SVG, embedded fonts) 45–75 h; depth in charts, animations, pictures, text, presenting, print/vector PDF 70–110 h; interaction (menu bar, Format Shape pane, font faces, dialogs) 25–40 h; stability 10–20 h |
+| Essentials user | ~62% | 50–90 (~40% parallelizes: ~30–55 h with 2–3 agents) | Opening received decks (corpus subset, EMF, SVG icons) 25–45 h; Windows launch fallback and Close prompt 6–12 h; font faces, Tab, paste, print, show navigation 12–20 h; start screen, menu bar, palette 6–10 h |
+
+Calibration is the same as for the full number (see [docs/target-app-parity.md](docs/target-app-parity.md#calibration-how-the-hours-were-derived)): a fix is 0.5–1 h, a checklist row to PowerPoint depth 2–4 h, a subsystem 6–35 h. The sets are nested, so essentials ≤ mainstream ≤ full. The full number is an additive weighted sum over the dimension table; only mainstream and essentials use multiplicative discounts.
+
+**Why alpha:** all six of PowerPoint's core workflows pass the alpha gate
+([docs/roadmap.md](docs/roadmap.md#alpha-gate-powerpoints-core-workflows)): build, open and save
+`.pptx`, present, add tables and charts, share as PDF, review. Core workflows work end to end (build a deck, open and save `.pptx`, present with
+transitions, animations, media and presenter view, export PDF), but depth, fidelity and polish
+have known gaps, and PPTX has never been tested on a corpus of real decks. Beta needs ~75% ready
+and no blocking gap in `.pptx`: the real-deck corpus, the round-trip losses (#70, #74, #77),
+EMF/SVG pictures, the data-loss and startup-crash bugs (#60, #40, #59) and the beta list in
+[docs/roadmap.md](docs/roadmap.md).
+
+## By dimension
+
+| Dimension | Ready | Hours to full | Doc |
+|---|---:|---|---|
+| Features (breadth 79% measured, with depth) | ~62% | 140–240 | [docs/parity-checklist.md](docs/parity-checklist.md) |
+| UI/UX fidelity | ~60% | 30–50 | [docs/ui-parity.md](docs/ui-parity.md) |
+| File formats (PPTX, PDF, legacy, export) | ~58% | 60–110 | [docs/file-format-parity.md](docs/file-format-parity.md) |
+| Hardware (GPU raster, video decode, displays, pens) | ~40% | 25–45 | [docs/hardware-parity.md](docs/hardware-parity.md) |
+| Localization | ~8% | 55–90 + native review | [docs/localization-parity.md](docs/localization-parity.md) |
+| Performance (unmeasured) | ~55% | 10–20 | [docs/hardware-parity.md](docs/hardware-parity.md#performance) |
+| Stability | ~60% | 10–20 | [docs/gaps.md](docs/gaps.md#stability) |
+| Platforms | ~80% | 5–10 | [Downloads in README](README.md#downloads) |
+| Ecosystem (templates; add-ins out of scope) | ~25% | 10–20 | [docs/gaps.md](docs/gaps.md#ecosystem) |
+| AI features | ~10% | 20–40 | [docs/gaps.md](docs/gaps.md#ai-features) |
+| Automation ✱ (CLI, control channel, MCP) | ahead | 0 | [docs/mcp.md](docs/mcp.md) |
+
+## Features
+
+| Area | Breadth (measured) | Ready (est.) | Hours | Doc |
+|---|---:|---:|---|---|
+| Application shell | 71% | ~55% | 8–14 | [ui-parity](docs/ui-parity.md) |
+| Slides and sections | 90% | ~85% | 3–5 | [checklist](docs/parity-checklist.md) |
+| Views | 90% | ~80% | 3–6 | [ui-parity](docs/ui-parity.md) |
+| Masters and themes | 85% | ~70% | 8–14 | [checklist](docs/parity-checklist.md) |
+| Shapes | 86% | ~75% | 8–14 | [ui-parity](docs/ui-parity.md) |
+| Format (fill, line, effects) | 81% | ~65% | 8–14 | [ui-parity](docs/ui-parity.md) |
+| Arrange | 100% | ~90% | 1–2 | [ui-parity](docs/ui-parity.md) |
+| Text | 80% | ~62% | 18–30 | [gaps](docs/gaps.md#features) |
+| Tables | 89% | ~75% | 3–6 | [checklist](docs/parity-checklist.md) |
+| Charts | 65% | ~45% | 12–20 | [gaps](docs/gaps.md#charts-data-grid-elements-and-the-newer-chart-types) |
+| SmartArt | 33% | ~25% | 10–16 | [gaps](docs/gaps.md#smartart-is-pre-drawn-shapes-only) |
+| Pictures | 48% | ~45% | 12–20 | [file formats](docs/file-format-parity.md) |
+| Media | 67% | ~60% | 8–14 | [file formats](docs/file-format-parity.md) |
+| Transitions | 92% | ~80% | 4–8 | [animation-parity](docs/animation-parity.md) |
+| Animations | 79% | ~65% | 10–16 | [animation-parity](docs/animation-parity.md) |
+| Slide show and presenter view | 66% | ~60% | 10–16 | [slideshow-parity](docs/slideshow-parity.md) |
+| Review | 60% | ~45% | 8–14 | [gaps](docs/gaps.md) |
+| Draw (ink) | 33% | ~30% | 5–9 | [hardware-parity](docs/hardware-parity.md) |
+| Undo and clipboard | 88% | ~75% | 3–5 | [ui-parity](docs/ui-parity.md) |
+| Files (commands; formats above) | 69% | ~50% | in file formats | [file formats](docs/file-format-parity.md) |
+
+## Languages
+
+English only today; no string catalog yet (Ukrainian is in review as PR #34). Detail:
+[docs/localization-parity.md](docs/localization-parity.md).
+
+| Language | Code | UI strings | Status | Hours to full |
+|---|---|---:|---|---|
+| English | en | 100% | full | 0 |
+| Simplified Chinese | zh-Hans | 0% | none | 6–10 |
+| Spanish | es | 0% | none | 3–5 |
+| Hindi | hi | 0% | none | 4–7 |
+| Arabic | ar | 0% (slide text: bidi and shaping done) | none | 10–16 |
+| French | fr | 0% | none | 3–5 |
+| Portuguese | pt | 0% | none | 3–5 |
+| Indonesian | id | 0% | none | 3–5 |
+| Japanese | ja | 0% | none | 4–7 |
+| German | de | 0% | none | 3–5 |
+| Korean | ko | 0% | none | 4–7 |
+| Vietnamese | vi | 0% | none | 3–5 |
+
+Plus 8–14 h once for the catalog infrastructure. Other languages shipped: none. PowerPoint for Mac
+ships 26.
+
+## Upcoming
+
+Ranked; detail and the full beta plan in [docs/roadmap.md](docs/roadmap.md).
+
+1. **No data loss, no startup crashes:** Close's save prompt (#60), Windows GPU crashes (#40, #59),
+   image paste (#53), editor soak tests. 10–20 h.
+2. **PPTX on real decks:** owned corpus, round-trip checks, fixes; #70, #74, #77; EMF/WMF and SVG.
+   36–64 h.
+3. **Localization:** catalog, system language (#15), zh-Hans, es, fr, de, ja with IME. 27–46 h.
+4. **Output:** vector PDF, printing. 10–16 h.
+5. **Depth that users hit:** font weights (#69), chart data and elements, Animation Pane timeline,
+   presenter view on the right display, native macOS menu bar, Format Shape pane. 33–56 h.
+
+## Agents: CLI and MCP
+
+Every command is reachable from `deckcraft-cli` (`run`, `describe`, `commands`, `app` for the running
+window, `render`, `convert`), from MCP (`deckcraft-cli mcp`, optionally `--connect PORT`), and from the
+app's JSON control channel (`deckcraft --control PORT`).
+
+## Progress log
+
+| Date | What landed |
+|---|---|
+| 2026-10-13 | Slide transitions like PowerPoint: every transition and option measured frame by frame against PowerPoint's video export and retuned (curves, directions, soft edges, 3-D perspective, contents moving over backgrounds); PowerPoint's own XML elements and defaults read and written (diagonal Wipe, Zoom, Shape In/Out, Glitter Hexagons, Shred In/Out, Page Curl Single); `deckcraft-cli render-transition` renders frames headless |
+| 2026-10-13 | Wild text cases measured against PowerPoint (102 synthetic slides): bidi by run language, East Asian vertical text upright, mongolianVert/wordArtVert/wordArtVertRtl, underline styles and strikethrough at the font's metrics, centre/right/decimal tabs, East Asian, Thai, Hindi, Arabic and Hebrew numbering, small caps, all-caps "ß", transparent text, soft hyphens, kinsoku, rtlCol and just/dist anchoring, emoji presentation, fallback faces that no longer move the baseline |
+| 2026-10-13 | Render matches PowerPoint more closely on wild shape, picture and table cases: even-odd custom paths, dashes and caps, arrowheads, radial and path gradients, tile rects, rotWithShape, gradient lines, shadows cast by what is drawn (group and perspective too), group fill, picture borders, tiles, reflection, recolour (biLevel, alphaInv, brightness/contrast), table borders and grid default, 20+ preset shapes by their ECMA formulas, default miter joins, and approximate 3-D bevels, cameras and face lighting |
+| 2026-10-12 | Objects off the slide show and can be selected and moved around it in Normal view, as in PowerPoint; the show, exports and thumbnails still clip to the slide (#270) |
+| 2026-10-12 | Korean, Japanese and Chinese input: IME composition shown in place and underlined, one undo step per composition, candidate window at the caret (slide text, notes, fields); interface text (title, notes, outline, sections, comments) borrows installed fonts for scripts the interface fonts lack (#101) |
+| 2026-10-12 | Selection Pane like PowerPoint (#133): front-most first, groups fold, drag and drop restacks among siblings, Bring Forward / Send Backward, Show All / Hide All, eye, rename in place, keyboard; Lock (pane padlock, canvas menu) keeps objects from moving, sizing or rotating and round-trips PowerPoint's locking attributes |
+| 2026-10-12 | Text keys like PowerPoint for Windows (#268): Ctrl+arrows and Ctrl+Shift+arrows by word (punctuation, CJK, emoji, RTL), Ctrl+Backspace/Delete with smart spacing, Ctrl+Up/Down by paragraph, Ctrl+Home/End, End on wrapped lines, Ctrl+]/[ and Ctrl+Shift+>/< font size, Shift+F3 case cycle, word and paragraph selection |
+| 2026-10-12 | EMF/WMF pictures draw their text (fonts, alignment, dx advances, escapement, symbol fonts), pattern and hatch brushes, PATBLT and the XOR/AND see-through shadow; legacy OLE objects show their VML preview and ActiveX controls their pictures |
+| 2026-10-12 | File tab (Backstage) like PowerPoint's (#76): File or Alt+F opens Home, New, Open, Info, Save, Save As, Print, Export, Close, Account and Options over the window, Esc or Back returns, arrows walk the side menu; the start screen is File › Home. Pages run the existing file commands; new `file.info`, print slide ranges (`"1-3, 5"`), Print through a PDF, Ctrl+P, and Close/Ctrl+W ask about unsaved changes |
+| 2026-10-12 | WordArt text warps (`prstTxWarp`): all 40 presets drawn, curves fitted to PowerPoint by observation; warp adjusts round-trip |
+| 2026-10-12 | Render: line widths, dashes and arrowheads inside a group no longer scale with the group's child-coordinate mapping, so a group in a small legacy child space (scale about 1600) draws thin lines instead of covering the slide (#233) |
+| 2026-10-10 | Progress docs restructured to the craftrules standard; full re-measure (breadth 79%, ready ~55%, mainstream ~53%, essentials ~62%, alpha). Landed: Animation Painter (#54), Morph geometry outlines (#27), animated GIF playback (#39), hyperlink colour and following links in the show (#37, #45), date fields in their own format (#36), flipped shapes keep readable text (#35), show transition fix (#46), start screen from the Home button (#49), MCP export lists PDF (#65), OmaStore manifest (#57) |
+| 2026-10-09 | v0.4.0 released. UAX #9 bidi and Arabic shaping (#4), Morph with Words and Characters (#5), tables grow to fit and PDF cell text (#14), rotating log file (#7), DX12 default on Windows (#16), H.264/HEVC overflow hardening (#2), PPTX sniffing anywhere in the zip (#19) |
+| 2026-10-08 | v0.2.0 and v0.3.0 released: Windows arm64, Flatpak aarch64, AppImage zsync updates, branded DMG |
+| 2026-10-07 | v0.1.0 released, signed and notarized; About window with contributor credits (#3); PrintCraft renamed PdfCraft |
+| 2026-10-06 | Renamed SlideCraft to DeckCraft. PPTX import/export, PDF export, media playback with pure-Rust codecs, connectors with glue, freeform tools, merge shapes, AutoRecover, gradient editor, web build, release CI, parity catalogue |
+| 2026-10-05 | M0: workspace, model, geometry, fonts, text, renderer, engine, MCP, CLI, PowerPoint-style egui UI, slide show engine |
+
+## Revision history
+
+| Date | Change | Summary |
+|---|---|---|
+| 2026-10-13 | trivial | Progress log: wild text cases |
+| 2026-10-12 | trivial | Progress log: File tab (Backstage, #76) |
+| 2026-10-12 | trivial | Progress log: lines in scaled groups (#233) |
+| 2026-10-10 | minor | Readiness-by-audience table with hours to ~95% for full, mainstream and essentials |
+| 2026-10-10 | minor | Added mainstream practitioner (~53%) and essentials user (~62%); features recomputed from written area weights, ready ~56% → ~55% |
+| 2026-10-10 | minor | Stage checked against the new core-workflow gate: passes, stays alpha |
+| 2026-10-10 | major | Restructured to craftrules `standards/progress-docs.md`: stage, two numbers, dimensions, features, languages; parity estimate moved to docs/target-app-parity.md, "Working today" to its evidence section, the alpha checklist to docs/roadmap.md |
+| 2026-10-07 | major | Alpha checklist (~80% to a self-defined alpha), breadth ~80%, overall ~62%, ~190 h to full parity |

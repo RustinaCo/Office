@@ -1,0 +1,20 @@
+[package]
+name = "deckcraft-pdf"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+description = "DeckCraft PDF export (krilla): slides, notes pages and handouts with a selectable text layer, links and bookmarks"
+
+[lints]
+workspace = true
+
+[dependencies]
+deckcraft-model = { workspace = true }
+deckcraft-fonts = { workspace = true }
+deckcraft-text = { workspace = true }
+deckcraft-render = { workspace = true }
+krilla = { workspace = true }
+kurbo = { workspace = true }
+serde = { workspace = true }
+thiserror = { workspace = true }
+log = { workspace = true }

@@ -1,0 +1,12 @@
+# Rust build output
+target/
+
+# Local-only planning notes (never committed)
+plan/
+
+# Editors and OS noise
+.DS_Store
+*.swp
+*~
+.idea/
+.vscode/

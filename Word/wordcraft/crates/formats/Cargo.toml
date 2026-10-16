@@ -1,0 +1,20 @@
+[package]
+name = "wordcraft-formats"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+description = "WordCraft import/export: plain text, Markdown, HTML, RTF, OpenDocument Text and LaTeX"
+
+[lints]
+workspace = true
+
+[dependencies]
+wordcraft-doc = { workspace = true }
+wordcraft-geom = { workspace = true }
+image = { workspace = true }
+quick-xml = { workspace = true }
+zip = { workspace = true }
+log = { workspace = true }
+
+[dev-dependencies]
+proptest = { workspace = true }
