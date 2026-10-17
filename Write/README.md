@@ -27,7 +27,7 @@ opens and saves the file formats you already have.
   </tr>
 </table>
 
-**Download:** [`apk/Rustina-Write-1.0.0.apk`](../apk/Rustina-Write-1.0.0.apk) — Android 10 (API 29) or
+**Download:** [`apk/Rustina-Write-1.0.1.apk`](../apk/Rustina-Write-1.0.1.apk) — Android 10 (API 29) or
 newer, arm64. Or build it yourself ([below](#building)).
 
 ## What it does
@@ -48,8 +48,9 @@ newer, arm64. Or build it yourself ([below](#building)).
 ## On a phone
 
 - **It opens on File.** A full-screen list of destinations — Home, New, Open, Info, Save, Save As,
-  Print, Export, Close, Options, About. Tap one for its own full-screen page; **Back** returns to the
-  list. (No launch menu to wade through.)
+  Print, Export, About, Options — the same list on the app's first screen and when you tap **File**
+  from the document. Tap one for its own full-screen page; **Back** returns to the list. (No launch
+  menu to wade through, and no Close row: on a phone Android's Back closes the document.)
 - **Android's Back button.** It closes the keyboard first, then the topmost page or dialog. In the
   document, if there is unsaved work it asks **Save / Don't Save / Cancel** — the same question the
   desktop app asks when you close a document — and after the document is closed you land on the File

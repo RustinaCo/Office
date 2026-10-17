@@ -36,10 +36,13 @@ pub enum Page {
     Print,
     Export,
     Options,
+    /// Phone only: the File list's About row. The desktop keeps About on the Help tab; the phone
+    /// has no Help tab on the File screen, so it needs a row of its own.
+    About,
 }
 
 impl Page {
-    pub const ALL: [Page; 8] = [Page::Home, Page::New, Page::Open, Page::Info, Page::SaveAs, Page::Print, Page::Export, Page::Options];
+    pub const ALL: [Page; 9] = [Page::Home, Page::New, Page::Open, Page::Info, Page::SaveAs, Page::Print, Page::Export, Page::Options, Page::About];
 
     /// The id `ui.backstage` and `ui.dialog {"name": "backstage", "page": …}` take.
     pub fn id(self) -> &'static str {
@@ -52,6 +55,7 @@ impl Page {
             Page::Print => "print",
             Page::Export => "export",
             Page::Options => "options",
+            Page::About => "about",
         }
     }
 
@@ -71,6 +75,7 @@ impl Page {
             Page::Print => "Print",
             Page::Export => "Export",
             Page::Options => "Options",
+            Page::About => "About",
         }
     }
 
@@ -84,6 +89,7 @@ impl Page {
             Page::Print => Icon::Print,
             Page::Export => Icon::Share,
             Page::Options => Icon::Settings,
+            Page::About => Icon::Info,
         }
     }
 }
@@ -106,6 +112,10 @@ pub struct Backstage {
     /// (level two), whose Back bar returns to the list. Ignored on the desktop, which has the nav
     /// column instead.
     pub list: bool,
+    /// Phone: the app opened this view itself on launch, so the list is the app's first screen and
+    /// shows no Back bar — there is nothing behind it to step into, and Android's Back leaves the
+    /// app from there. A view the user opens (the File tab, a menu) has the sheet behind it.
+    pub launched: bool,
     /// Info: property drafts while a field is being edited (committed when it loses focus).
     props: [String; 6],
     /// Print: the whole workbook rather than the active sheet.
@@ -132,6 +142,7 @@ impl Backstage {
         Backstage {
             page,
             list: true,
+            launched: false,
             props: Default::default(),
             print_all: false,
             fit_to_page: false,
@@ -287,6 +298,7 @@ fn backstage_page(app: &mut SheetApp, ui: &mut Ui, bs: &mut Backstage, out: &mut
         Page::Print => print(app, ui, bs, out),
         Page::Export => export(app, ui, out),
         Page::Options => options(app, ui),
+        Page::About => crate::dialogs::about_body(ui),
     }
 }
 
@@ -307,14 +319,16 @@ fn backstage_mobile(
 ) {
     let _ = ctx;
     if bs.list {
-        mobile_list(app, ui, out, t, lang, nav_bg, nav_text);
+        mobile_list(app, ui, out, t, lang, nav_bg, nav_text, bs.launched);
     } else {
         mobile_page(app, ui, bs, out, t, lang, nav_bg, nav_text);
     }
 }
 
-/// The File screen's destinations, in the order the phone list shows them. Save and Close act at
-/// once, as they do in the desktop nav column; the rest open their page.
+/// The File screen's destinations, in the order the phone list shows them. Save acts at once, as it
+/// does in the desktop nav column; the rest open their page. Close is left out on a phone —
+/// Android's Back closes the workbook — and About is a page here, where the desktop reaches it from
+/// the Help tab. The list is the same whether or not a workbook is open.
 const MENU: [(&str, &str); 10] = [
     ("home", "Home"),
     ("new", "New"),
@@ -324,38 +338,42 @@ const MENU: [(&str, &str); 10] = [
     ("saveAs", "Save As"),
     ("print", "Print"),
     ("export", "Export"),
-    ("close", "Close"),
+    ("about", "About"),
     ("options", "Options"),
 ];
 
-/// The blue File bar: Back and the screen's title.
-fn mobile_bar(ui: &mut Ui, lang: Language, title: &str, nav_bg: Color32, nav_text: Color32) -> bool {
-    let mut back = false;
+/// The blue File bar: the screen's title and, on a page, Back — which steps back to the list. The
+/// list shows Back only when a workbook is open to go back to.
+fn mobile_bar(ui: &mut Ui, lang: Language, title: &str, nav_bg: Color32, nav_text: Color32, back: bool) -> bool {
+    let mut tapped = false;
     egui::Panel::top("backstage_m_top").exact_size(56.0).frame(egui::Frame::NONE.fill(nav_bg).inner_margin(egui::Margin::symmetric(8, 0))).show(
         ui,
         |ui| {
             ui.horizontal_centered(|ui| {
-                if ui
-                    .add(
-                        egui::Button::new(RichText::new(format!("‹ {}", lang.tr("Back"))).color(nav_text))
-                            .frame(false)
-                            .min_size(vec2(96.0, 48.0)),
-                    )
-                    .clicked()
+                if back
+                    && ui
+                        .add(
+                            egui::Button::new(RichText::new(format!("‹ {}", lang.tr("Back"))).color(nav_text))
+                                .frame(false)
+                                .min_size(vec2(96.0, 48.0)),
+                        )
+                        .clicked()
                 {
-                    back = true;
+                    tapped = true;
                 }
                 ui.label(RichText::new(title).font(theme::ui_bold(19.0)).color(nav_text));
             });
         },
     );
-    back
+    tapped
 }
 
 /// Phone File screen, level one: one full-screen row per destination.
-fn mobile_list(app: &mut SheetApp, ui: &mut Ui, out: &mut Outcome, t: &Tokens, lang: Language, nav_bg: Color32, nav_text: Color32) {
-    // Back on the list leaves File, back to the sheet (Escape does the same, in `show`).
-    if mobile_bar(ui, lang, lang.tr("File"), nav_bg, nav_text) {
+fn mobile_list(app: &mut SheetApp, ui: &mut Ui, out: &mut Outcome, t: &Tokens, lang: Language, nav_bg: Color32, nav_text: Color32, launched: bool) {
+    // Back on the list leaves File, back to the sheet — but only when the view was opened with a
+    // sheet already behind it. On launch the list *is* the app's first screen, and there Android's
+    // Back is the way off it (`mobile_back`).
+    if mobile_bar(ui, lang, lang.tr("File"), nav_bg, nav_text, !launched) {
         out.close = true;
     }
     egui::CentralPanel::default().frame(egui::Frame::NONE.fill(t.ribbon)).show(ui, |ui| {
@@ -364,7 +382,6 @@ fn mobile_list(app: &mut SheetApp, ui: &mut Ui, out: &mut Outcome, t: &Tokens, l
                 if list_row(ui, t, mobile_icon(id), lang.tr(label)) {
                     match id {
                         "save" => save(app, out),
-                        "close" => close_book(app, out),
                         _ => {
                             if let Some(page) = Page::parse(id) {
                                 out.page = Some(page);
@@ -382,7 +399,7 @@ fn mobile_list(app: &mut SheetApp, ui: &mut Ui, out: &mut Outcome, t: &Tokens, l
 /// Phone File screen, level two: one destination's page, with Back to the list.
 #[allow(clippy::too_many_arguments)]
 fn mobile_page(app: &mut SheetApp, ui: &mut Ui, bs: &mut Backstage, out: &mut Outcome, t: &Tokens, lang: Language, nav_bg: Color32, nav_text: Color32) {
-    if mobile_bar(ui, lang, lang.tr(bs.page.label()), nav_bg, nav_text) {
+    if mobile_bar(ui, lang, lang.tr(bs.page.label()), nav_bg, nav_text, true) {
         out.list = Some(true);
     }
     egui::CentralPanel::default().frame(egui::Frame::NONE.fill(t.ribbon)).show(ui, |ui| {
@@ -418,7 +435,7 @@ fn mobile_icon(id: &str) -> Icon {
         "save" | "saveAs" => Icon::Save,
         "print" => Icon::Print,
         "export" => Icon::Share,
-        "close" => Icon::Close,
+        "about" => Icon::Info,
         "options" => Icon::Settings,
         _ => Icon::Info,
     }

@@ -26,10 +26,11 @@ screen. `.xlsx` is the native format, so your workbooks are the same files you u
     <td align="center"><img src="screenshots/grid.png" width="200"><br><sub>Editing a sheet</sub></td>
     <td align="center"><img src="screenshots/new-workbook.png" width="200"><br><sub>New workbook</sub></td>
     <td align="center"><img src="screenshots/options.png" width="200"><br><sub>Options</sub></td>
+    <td align="center"><img src="screenshots/about.png" width="200"><br><sub>About</sub></td>
   </tr>
 </table>
 
-**Download:** [`apk/Rustina-Gride-1.0.0.apk`](../apk/Rustina-Gride-1.0.0.apk) — Android 10 (API 29) or
+**Download:** [`apk/Rustina-Gride-1.0.1.apk`](../apk/Rustina-Gride-1.0.1.apk) — Android 10 (API 29) or
 newer, arm64. Or build it yourself ([below](#building)).
 
 ## What it does
@@ -54,8 +55,10 @@ newer, arm64. Or build it yourself ([below](#building)).
 ## On a phone
 
 - **It opens on File.** A full-screen list of destinations — Home, New, Open, Info, Save, Save As,
-  Print, Export, Close, Options, About. Tap one for its own full-screen page; **Back** returns to the
-  list.
+  Print, Export, About, Options — the same list on the app's first screen and when you tap **File**
+  from the workbook. Tap one for its own full-screen page; **Back** returns to the list. On the list
+  itself **Back** is shown whenever there is a workbook behind it to step into; on the app's first
+  screen it is not, and Back there leaves the app. Close is Android's Back, so there is no Close row.
 - **Android's Back button.** It closes the keyboard first, then the topmost page or dialog. In the
   workbook, if there is unsaved work it asks **Save / Don't Save / Cancel** — the same question the
   desktop app asks when you close a workbook — and after it is closed you land on the File page.

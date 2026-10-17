@@ -11,11 +11,9 @@ use gridcraft_ui_egui::SheetApp;
 
 type Harness = egui_kittest::Harness<'static, SheetApp>;
 
-fn harness() -> Option<Harness> {
-    if !std::env::var("GRIDCRAFT_PHONE").is_ok_and(|v| v == "1" || v == "true") {
-        eprintln!("phone_file_list: skipping — run with GRIDCRAFT_PHONE=1");
-        return None;
-    }
+/// A phone-sized app sitting on the File screen. `launched` is what the app sets when it opens the
+/// screen itself on launch; anything the user opens (the File tab, a menu) leaves it false.
+fn build(launched: bool) -> Harness {
     let mut session = Session::new();
     session.new_workbook();
     let mut h = egui_kittest::Harness::builder().with_size(egui::vec2(412.0, 915.0)).build_ui_state(
@@ -30,9 +28,29 @@ fn harness() -> Option<Harness> {
     // The splash covers the first 1.6 s of a phone launch, so let it time out; a test may run after
     // another one already dismissed it, so open the File screen explicitly too.
     std::thread::sleep(std::time::Duration::from_millis(1800));
-    h.state_mut().backstage = Some(Backstage::new(Page::Home));
+    let mut bs = Backstage::new(Page::Home);
+    bs.launched = launched;
+    h.state_mut().backstage = Some(bs);
     h.run_steps(4);
-    Some(h)
+    h
+}
+
+/// The File screen as the File tab opens it, with the sheet behind it.
+fn harness() -> Option<Harness> {
+    if !std::env::var("GRIDCRAFT_PHONE").is_ok_and(|v| v == "1" || v == "true") {
+        eprintln!("phone_file_list: skipping — run with GRIDCRAFT_PHONE=1");
+        return None;
+    }
+    Some(build(false))
+}
+
+/// The app's first screen: the File screen as the phone shows it on launch.
+fn first_screen() -> Option<Harness> {
+    if !std::env::var("GRIDCRAFT_PHONE").is_ok_and(|v| v == "1" || v == "true") {
+        eprintln!("phone_file_list: skipping — run with GRIDCRAFT_PHONE=1");
+        return None;
+    }
+    Some(build(true))
 }
 
 fn tap(h: &mut Harness, label: &str) {
@@ -73,6 +91,7 @@ fn every_destination_is_reachable() {
         ("Save As", Page::SaveAs),
         ("Print", Page::Print),
         ("Export", Page::Export),
+        ("About", Page::About),
         ("Options", Page::Options),
     ] {
         let Some(mut h) = harness() else { return };
@@ -81,4 +100,33 @@ fn every_destination_is_reachable() {
         assert_eq!(bs.page, page, "{label} opens its page");
         assert!(!bs.list, "{label} leaves the list");
     }
+}
+
+/// Close is not a phone row (Android's Back closes the workbook) and About is one: the phone has
+/// no Help tab to reach it from.
+#[test]
+fn close_is_gone_and_about_is_offered() {
+    let Some(mut h) = harness() else { return };
+    assert!(h.query_all_by_label("About").next().is_some(), "About is a row");
+    assert!(h.query_all_by_label("Close").next().is_none(), "Close is not a row of the phone list");
+    tap(&mut h, "About");
+    let bs = h.state().backstage.as_ref().unwrap();
+    assert_eq!(bs.page, Page::About);
+}
+
+/// The list the app opens on is the app's first screen: the same rows, but no Back bar, since
+/// there is nothing behind it to step into (Android's Back is the way off it). The File tab, with
+/// the sheet behind it, does show Back — and tapping it leaves the File screen.
+#[test]
+fn the_launch_list_has_no_back_but_the_file_tab_does() {
+    let Some(h) = first_screen() else { return };
+    assert!(h.query_all_by_label("‹ Back").next().is_none(), "the first screen shows no Back");
+    for row in ["Home", "New", "Open", "Info", "Save As", "Print", "Export", "About", "Options"] {
+        assert!(h.query_all_by_label(row).next().is_some(), "{row} is still a row");
+    }
+
+    let Some(mut h) = harness() else { return };
+    assert!(h.query_all_by_label("‹ Back").next().is_some(), "the File tab shows Back");
+    tap(&mut h, "‹ Back");
+    assert!(h.state().backstage.is_none(), "Back leaves the File screen for the sheet");
 }

@@ -27,10 +27,11 @@ touch screen. It opens and saves PowerPoint `.pptx` files and presents them full
     <td align="center"><img src="screenshots/slide.png" width="200"><br><sub>Editing a slide</sub></td>
     <td align="center"><img src="screenshots/new-deck.png" width="200"><br><sub>New presentation</sub></td>
     <td align="center"><img src="screenshots/presenting.png" width="200"><br><sub>Slide show</sub></td>
+    <td align="center"><img src="screenshots/about.png" width="200"><br><sub>About</sub></td>
   </tr>
 </table>
 
-**Download:** [`apk/Rustina-Slides-1.0.0.apk`](../apk/Rustina-Slides-1.0.0.apk) — Android 10 (API 29) or
+**Download:** [`apk/Rustina-Slides-1.0.1.apk`](../apk/Rustina-Slides-1.0.1.apk) — Android 10 (API 29) or
 newer, arm64. Or build it yourself ([below](#building)).
 
 ## What it does
@@ -55,8 +56,11 @@ newer, arm64. Or build it yourself ([below](#building)).
 ## On a phone
 
 - **It opens on File.** A full-screen list of destinations — Home, New, Open, Info, Save, Save As,
-  Print, Export, Close, Options, About. Tap one for its own full-screen page; **Back** returns to the
-  list.
+  Print, Export, About, Options — the same list on the app's first screen and when you tap **File**
+  from the presentation. Tap one for its own full-screen page; **Back** returns to the list. On the
+  list itself **Back** is shown whenever there is a presentation behind it to step into; on the app's
+  first screen it is not, and Back there leaves the app. Close is Android's Back, and Account is
+  desktop-only here, so neither is a phone row.
 - **The footer toggles the slide panel.** The first icon in the footer shows and hides the pane of
   all slides — tap it to fold the pane away and get the whole screen for the slide, tap it again to
   bring it back (the icon shows whether the pane is open). There is no floating button in the way of

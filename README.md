@@ -10,7 +10,7 @@ desktop, rebuilt lightweight for Android.**
 ![Platform: Android 10+](https://img.shields.io/badge/Android-10%2B%20(arm64)-3ddc84?style=flat-square&logo=android&logoColor=white)
 ![Written in Rust](https://img.shields.io/badge/written%20in-Rust-b7410e?style=flat-square&logo=rust&logoColor=white)
 ![License: MIT](https://img.shields.io/badge/license-MIT-blue?style=flat-square)
-![Version 1.0.0](https://img.shields.io/badge/version-1.0.0-2b47b5?style=flat-square)
+![Version 1.0.1](https://img.shields.io/badge/version-1.0.1-2b47b5?style=flat-square)
 
 </div>
 
@@ -63,9 +63,9 @@ desktop apps, laid out for a touch screen. Nothing is a stripped-down "mobile ed
 
 ## Install
 
-1. Download the APK you want from the [**v1.0.0 release**](https://github.com/RustinaCo/Office/releases/tag/v1.0.0)
-   or from [`apk/`](apk) at that tag: **`Rustina-Write-1.0.0.apk`** (documents),
-   **`Rustina-Gride-1.0.0.apk`** (spreadsheets), **`Rustina-Slides-1.0.0.apk`** (presentations).
+1. Download the APK you want from the [**v1.0.1 release**](https://github.com/RustinaCo/Office/releases/tag/v1.0.1)
+   or from [`apk/`](apk) at that tag: **`Rustina-Write-1.0.1.apk`** (documents),
+   **`Rustina-Gride-1.0.1.apk`** (spreadsheets), **`Rustina-Slides-1.0.1.apk`** (presentations).
 2. Open it on the phone and allow installing from this source when Android asks.
 3. That's it — no account, no ads, no telemetry, no network permission.
 
@@ -77,11 +77,14 @@ through the system picker.
 Everything below is on top of the desktop apps; the desktop layout is untouched.
 
 - **The File page, rebuilt for the thumb.** Phones open on **File**: a full-screen list of destinations
-  (Home, New, Open, Info, Save, Save As, Print, Export, Close, Options, About). Tap one and you get that
-  one page, big and full screen; **Back** returns to the list. The old launch menu is gone.
+  (Home, New, Open, Info, Save, Save As, Print, Export, About, Options) — the same list on the app's
+  first screen and when you tap **File** from the document. Tap one and you get that one page, big and
+  full screen; **Back** returns to the list. The old launch menu is gone, and Close is left out: on a
+  phone the document is closed with Android's Back.
 - **Android's Back button behaves.** It closes the keyboard first, then the page or dialog on top, and
-  in the document it asks **Save / Don't Save / Cancel** when there is unsaved work. Back on the File
-  screen with nothing open leaves the app.
+  in the document it asks **Save / Don't Save / Cancel** when there is unsaved work. On the File list
+  **Back** appears as soon as there is a document behind it to step into; on the app's first screen it
+  is not shown, and Back there leaves the app.
 - **AutoSave that actually saves.** Once the document has a file, the AutoSave switch in the title bar
   turns on and keeps writing it — including the copy the app keeps for itself, so nothing is lost even
   if the phone is put away mid-edit.

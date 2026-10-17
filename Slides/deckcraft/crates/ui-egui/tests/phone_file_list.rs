@@ -12,17 +12,20 @@ use egui_kittest::kittest::Queryable as _;
 
 type Harness = egui_kittest::Harness<'static, SlideApp>;
 
-fn harness() -> Option<Harness> {
-    if !std::env::var("DECKCRAFT_PHONE").is_ok_and(|v| v == "1" || v == "true") {
-        eprintln!("phone_file_list: skipping — run with DECKCRAFT_PHONE=1");
-        return None;
-    }
+fn phone() -> bool {
+    std::env::var("DECKCRAFT_PHONE").is_ok_and(|v| v == "1" || v == "true")
+}
+
+/// A phone-sized app sitting on the File screen, with a presentation unless asked for none: the
+/// same screen in both cases, which is the point of the first-screen test below.
+fn build(presentation: bool) -> Harness {
+    let session = if presentation { Session::with_new() } else { Session::new() };
     let mut h = egui_kittest::Harness::builder().with_size(egui::vec2(412.0, 915.0)).build_ui_state(
         |ui, app: &mut SlideApp| {
             app.logic(ui.ctx());
             app.ui(ui);
         },
-        SlideApp::new(Session::with_new(), Services::default()),
+        SlideApp::new(session, Services::default()),
     );
     h.run_steps(2);
     // The splash covers the first 1.6 s of a phone launch, so let it time out; a test may run after
@@ -30,7 +33,24 @@ fn harness() -> Option<Harness> {
     std::thread::sleep(std::time::Duration::from_millis(1800));
     h.state_mut().open_backstage(Page::Home);
     h.run_steps(4);
-    Some(h)
+    h
+}
+
+fn harness() -> Option<Harness> {
+    if !phone() {
+        eprintln!("phone_file_list: skipping — run with DECKCRAFT_PHONE=1");
+        return None;
+    }
+    Some(build(true))
+}
+
+/// The app's first screen: nothing open, and the File screen as the phone shows it on launch.
+fn first_screen() -> Option<Harness> {
+    if !phone() {
+        eprintln!("phone_file_list: skipping — run with DECKCRAFT_PHONE=1");
+        return None;
+    }
+    Some(build(false))
 }
 
 fn tap(h: &mut Harness, label: &str) {
@@ -71,7 +91,7 @@ fn every_destination_is_reachable() {
         ("Save As", Page::SaveAs),
         ("Print", Page::Print),
         ("Export", Page::Export),
-        ("Account", Page::Account),
+        ("About", Page::About),
     ] {
         let Some(mut h) = harness() else { return };
         tap(&mut h, label);
@@ -81,9 +101,26 @@ fn every_destination_is_reachable() {
     }
 }
 
+/// Close and Account are not phone rows; About is one.
 #[test]
-fn options_opens_the_preferences_dialog_over_the_list() {
+fn close_and_account_are_gone_and_about_is_offered() {
     let Some(mut h) = harness() else { return };
-    tap(&mut h, "Options");
-    assert!(h.state().dialog.is_some(), "Options opens the preferences dialog");
+    assert!(h.query_all_by_label("About").next().is_some(), "About is a row");
+    assert!(h.query_all_by_label("Close").next().is_none(), "Close is not a row of the phone list");
+    assert!(h.query_all_by_label("Account").next().is_none(), "Account is not a row of the phone list");
+    tap(&mut h, "About");
+    let bs = h.state().backstage.as_ref().unwrap();
+    assert_eq!(bs.page, Page::About);
+}
+
+/// With nothing open the File list is the app's first screen: the same rows, but no Back bar —
+/// there is nowhere to go back to (Android's Back is the way off it).
+#[test]
+fn the_first_screen_keeps_every_row_but_has_no_back() {
+    let Some(h) = first_screen() else { return };
+    assert!(h.state().session.active().is_none(), "nothing is open");
+    assert!(h.query_all_by_label("‹ Back").next().is_none(), "the first screen shows no Back");
+    for row in ["Home", "New", "Open", "Info", "Save As", "Print", "Export", "About"] {
+        assert!(h.query_all_by_label(row).next().is_some(), "{row} is still a row");
+    }
 }

@@ -1192,7 +1192,10 @@ impl SheetApp {
             // Phones open straight on the File screen: it already offers new, open, recent and
             // options, so a second launch menu in front of it is only in the way.
             crate::start::dismiss();
-            self.backstage = Some(backstage::Backstage::new(backstage::Page::Home));
+            let mut bs = backstage::Backstage::new(backstage::Page::Home);
+            // This one the app opened itself: the list is the phone's first screen (no Back bar).
+            bs.launched = true;
+            self.backstage = Some(bs);
         }
         let t0 = now_ms();
         text_box::before_ui(self, &ctx);

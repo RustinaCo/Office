@@ -134,37 +134,30 @@ fn backstage_mobile(app: &mut WordApp, ui: &mut Ui, t: &Tokens, has_document: bo
     }
 }
 
-/// The blue File bar: Back (when there is somewhere to go back to) and the screen's title.
-fn mobile_bar(app: &mut WordApp, ui: &mut Ui, title: &str, back: Option<BackKind>) {
+/// The blue File bar: the screen's title and, on a page, Back — which steps back to the list. The
+/// list itself shows no Back: it is where the phone app starts, and Android's own Back leaves it
+/// (see [`WordApp::mobile_back`]).
+fn mobile_bar(app: &mut WordApp, ui: &mut Ui, title: &str, back: bool) {
     egui::Panel::top("backstage_m_top").exact_size(56.0).frame(egui::Frame::NONE.fill(APP_COLOR).inner_margin(egui::Margin::symmetric(8, 0))).show(
         ui,
         |ui| {
             ui.horizontal_centered(|ui| {
-                match back {
-                    Some(kind) => {
-                        let (r, resp) = ui.allocate_exact_size(vec2(96.0, 48.0), Sense::click());
-                        icons::paint(
-                            ui.painter(),
-                            Rect::from_center_size(pos2(r.min.x + 24.0, r.center().y), vec2(18.0, 18.0)),
-                            "chevronLeft",
-                            egui::Color32::WHITE,
-                            egui::Color32::WHITE,
-                        );
-                        ui.painter().text(pos2(r.min.x + 38.0, r.center().y), Align2::LEFT_CENTER, tl!("Back"), medium(15.0), egui::Color32::WHITE);
-                        // Escape in the built-in file browser closes only the browser.
-                        if resp.clicked() || (!app.file_dialog_open() && ui.input(|i| i.key_pressed(egui::Key::Escape))) {
-                            match kind {
-                                // A page steps back to the list.
-                                BackKind::List => app.ui.backstage_list = true,
-                                // The list itself steps out of File, back to the document.
-                                BackKind::Document => {
-                                    app.ui.backstage = false;
-                                    app.canvas.want_focus = true;
-                                }
-                            }
-                        }
+                if back {
+                    let (r, resp) = ui.allocate_exact_size(vec2(96.0, 48.0), Sense::click());
+                    icons::paint(
+                        ui.painter(),
+                        Rect::from_center_size(pos2(r.min.x + 24.0, r.center().y), vec2(18.0, 18.0)),
+                        "chevronLeft",
+                        egui::Color32::WHITE,
+                        egui::Color32::WHITE,
+                    );
+                    ui.painter().text(pos2(r.min.x + 38.0, r.center().y), Align2::LEFT_CENTER, tl!("Back"), medium(15.0), egui::Color32::WHITE);
+                    // Escape in the built-in file browser closes only the browser.
+                    if resp.clicked() || (!app.file_dialog_open() && ui.input(|i| i.key_pressed(egui::Key::Escape))) {
+                        app.ui.backstage_list = true;
                     }
-                    None => ui.add_space(8.0),
+                } else {
+                    ui.add_space(8.0);
                 }
                 ui.label(egui::RichText::new(title).font(semibold(18.0)).color(egui::Color32::WHITE));
             });
@@ -172,30 +165,20 @@ fn mobile_bar(app: &mut WordApp, ui: &mut Ui, title: &str, back: Option<BackKind
     );
 }
 
-/// Where a File bar's Back goes.
-#[derive(Clone, Copy)]
-enum BackKind {
-    /// Back to the destination list (from a page).
-    List,
-    /// Back to the document (from the list, closing the Backstage).
-    Document,
-}
-
 /// Phone File screen, level one: one full-screen row per destination.
 fn mobile_list(app: &mut WordApp, ui: &mut Ui, t: &Tokens, has_document: bool) {
-    mobile_bar(app, ui, tl!("File"), has_document.then_some(BackKind::Document));
+    mobile_bar(app, ui, tl!("File"), false);
     egui::CentralPanel::default().frame(egui::Frame::NONE.fill(t.ribbon)).show(ui, |ui| {
         egui::ScrollArea::vertical().auto_shrink([false, false]).show(ui, |ui| {
             for (id, label) in PAGES {
-                // No document open (#1129): Info, Save, Save As, Print, Export and Close are greyed.
+                // Close is not offered on a phone: Android's Back closes the document (#1267).
+                if id == "close" {
+                    continue;
+                }
+                // No document open (#1129): Info, Save, Save As, Print and Export are greyed.
                 let on = has_document || works_without_document(id);
                 if list_row(ui, t, page_icon(id), label, on) {
                     match id {
-                        // Not a page: `file.close` asks Save / Don't Save / Cancel first when there
-                        // are unsaved changes, and Cancel leaves the list where it was.
-                        "close" => {
-                            let _ = app.run("file.close", json!({}));
-                        }
                         // Save either saves (leaving the Backstage) or falls through to Save As.
                         "save" => {
                             nav_go(app, id);
@@ -258,7 +241,7 @@ fn page_icon(id: &str) -> &'static str {
 
 /// Phone File screen, level two: one destination's page, with Back to the list.
 fn mobile_page(app: &mut WordApp, ui: &mut Ui, t: &Tokens) {
-    mobile_bar(app, ui, &page_label(&app.ui.backstage_page), Some(BackKind::List));
+    mobile_bar(app, ui, &page_label(&app.ui.backstage_page), true);
     egui::CentralPanel::default().frame(egui::Frame::NONE.fill(t.ribbon).inner_margin(egui::Margin::symmetric(16, 16))).show(ui, |ui| {
         egui::ScrollArea::vertical().auto_shrink([false, false]).show(ui, |ui| match app.ui.backstage_page.as_str() {
             "home" => home_page(app, ui),

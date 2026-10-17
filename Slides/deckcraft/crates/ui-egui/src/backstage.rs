@@ -37,10 +37,13 @@ pub enum Page {
     Print,
     Export,
     Account,
+    /// Phone only: the File list's About row (the desktop reaches About from the Help menu).
+    About,
 }
 
 impl Page {
-    pub const ALL: [Page; 8] = [Page::Home, Page::New, Page::Open, Page::Info, Page::SaveAs, Page::Print, Page::Export, Page::Account];
+    pub const ALL: [Page; 9] =
+        [Page::Home, Page::New, Page::Open, Page::Info, Page::SaveAs, Page::Print, Page::Export, Page::Account, Page::About];
 
     /// The id `app.backstage {page}` takes.
     pub fn id(self) -> &'static str {
@@ -53,6 +56,7 @@ impl Page {
             Page::Print => "print",
             Page::Export => "export",
             Page::Account => "account",
+            Page::About => "about",
         }
     }
 
@@ -72,6 +76,7 @@ impl Page {
             Page::Print => "Print",
             Page::Export => "Export",
             Page::Account => "Account",
+            Page::About => "About",
         }
     }
 
@@ -85,6 +90,7 @@ impl Page {
             Page::Print => Icon::Print,
             Page::Export => Icon::Export,
             Page::Account => Icon::Account,
+            Page::About => Icon::Help,
         }
     }
 
@@ -335,7 +341,7 @@ pub fn show(app: &mut SlideApp, ui: &mut Ui) {
         // Phone: the 160pt nav column would leave no room for content, so the
         // File screen is the phone app's own: a full-screen list of destinations, and one
         // full-screen page per destination whose Back bar returns to the list.
-        backstage_mobile(app, ui, &t, &mut bs, &mut out, nav_bg, page_bg, &top, &bottom, has_doc);
+        backstage_mobile(app, ui, &t, &mut bs, &mut out, nav_bg, page_bg, has_doc);
     } else {
         backstage_desktop(app, ui, &t, &mut bs, &mut out, nav_bg, page_bg, &top, &bottom, has_doc);
     }
@@ -452,6 +458,7 @@ fn backstage_body(app: &mut SlideApp, ui: &mut Ui, t: &Tokens, bs: &mut Backstag
                 Page::Print => print(app, ui, &mut *bs),
                 Page::Export => export(app, ui, &mut *bs),
                 Page::Account => account(app, ui),
+                Page::About => crate::dialogs::about(app, ui),
             }
         });
     });
@@ -468,38 +475,58 @@ fn backstage_mobile(
     out: &mut Outcome,
     nav_bg: Color32,
     page_bg: Color32,
-    top: &[Nav],
-    bottom: &[Nav],
     has_doc: bool,
 ) {
-    let _ = has_doc;
     if bs.list {
-        mobile_list(app, ui, t, bs, out, nav_bg, page_bg, top, bottom);
+        mobile_list(app, ui, t, bs, out, nav_bg, page_bg, has_doc);
     } else {
         mobile_page(app, ui, t, bs, out, nav_bg, page_bg);
     }
 }
 
-/// The File bar: Back and the screen's title (`File` on the list, the destination's name on a
-/// page). True when Back was tapped.
-fn mobile_bar(ui: &mut Ui, t: &Tokens, title: &str, nav_bg: Color32, back_label: &str) -> bool {
-    let mut back = false;
+/// The File bar: the screen's title and, on a page, Back — which steps back to the list. The list
+/// shows Back only when there is a presentation to go back to; on the app's first screen there is
+/// none (Android's own Back is the way off it).
+fn mobile_bar(ui: &mut Ui, t: &Tokens, title: &str, nav_bg: Color32, back_label: &str, back: bool) -> bool {
+    let mut tapped = false;
     egui::Panel::top("backstage_m_top").exact_size(56.0).frame(egui::Frame::NONE.fill(nav_bg).inner_margin(egui::Margin::symmetric(8, 0))).show(
         ui,
         |ui| {
             ui.horizontal_centered(|ui| {
-                let b = ui.add(
-                    egui::Button::new(RichText::new(format!("‹ {back_label}")).color(t.text)).frame(false).min_size(vec2(96.0, 48.0)),
-                );
-                if b.clicked() {
-                    back = true;
+                if back
+                    && ui
+                        .add(
+                            egui::Button::new(RichText::new(format!("‹ {back_label}")).color(t.text))
+                                .frame(false)
+                                .min_size(vec2(96.0, 48.0)),
+                        )
+                        .clicked()
+                {
+                    tapped = true;
                 }
                 ui.label(RichText::new(title).font(theme::bold(19.0)).color(t.text));
             });
         },
     );
-    back
+    tapped
 }
+
+/// The phone File list's destinations, in order: the same rows whether or not a presentation is
+/// open, so the list on the app's first screen and the one File opens are the same screen. The
+/// desktop nav column keeps its own, state-dependent list; Close (Android's Back closes the deck)
+/// and Account are left out.
+const MENU: [Nav; 10] = [
+    Nav::Page(Page::Home),
+    Nav::Page(Page::New),
+    Nav::Page(Page::Open),
+    Nav::Page(Page::Info),
+    Nav::Save,
+    Nav::Page(Page::SaveAs),
+    Nav::Page(Page::Print),
+    Nav::Page(Page::Export),
+    Nav::Page(Page::About),
+    Nav::Options,
+];
 
 /// Phone File screen, level one: one full-screen row per destination.
 #[allow(clippy::too_many_arguments)]
@@ -511,18 +538,16 @@ fn mobile_list(
     out: &mut Outcome,
     nav_bg: Color32,
     page_bg: Color32,
-    top: &[Nav],
-    bottom: &[Nav],
+    has_doc: bool,
 ) {
-    // Back on the list leaves File, back to the slide.
-    if mobile_bar(ui, t, "File", nav_bg, "Back") {
+    // Back on the list leaves File, back to the presentation.
+    if mobile_bar(ui, t, "File", nav_bg, "Back", has_doc) {
         out.close = true;
     }
-    let all: Vec<Nav> = top.iter().chain(bottom.iter()).copied().collect();
     egui::CentralPanel::default().frame(egui::Frame::NONE.fill(page_bg)).show(ui, |ui| {
         egui::ScrollArea::vertical().auto_shrink([false, false]).show(ui, |ui| {
             egui::Frame::NONE.inner_margin(egui::Margin { left: 12, right: 12, top: 6, bottom: 24 }).show(ui, |ui| {
-                for nav in all {
+                for nav in MENU {
                     if mobile_row(ui, t, nav, bs.page) {
                         bs.focus = None;
                         if let Nav::Page(p) = nav {
@@ -547,7 +572,7 @@ fn mobile_list(
 
 /// Phone File screen, level two: one destination's page, with Back to the list.
 fn mobile_page(app: &mut SlideApp, ui: &mut Ui, t: &Tokens, bs: &mut Backstage, out: &mut Outcome, nav_bg: Color32, page_bg: Color32) {
-    if mobile_bar(ui, t, bs.page.label(), nav_bg, "Back") {
+    if mobile_bar(ui, t, bs.page.label(), nav_bg, "Back", true) {
         out.list = Some(true);
     }
     egui::CentralPanel::default().frame(egui::Frame::NONE.fill(page_bg)).show(ui, |ui| {

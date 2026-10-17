@@ -1088,7 +1088,7 @@ pub fn show(app: &mut SheetApp, ctx: &egui::Context) {
                     ui.add_space(4.0);
                     ui.label(format!("{} engine commands are available. See docs/mcp.md and docs/control-protocol.md.", gridcraft_engine::command_specs().len()));
                 }
-                "about" => about(ui, &mut d),
+                "about" => about_body(ui),
                 "journal" => {
                     egui::ScrollArea::vertical().max_height(360.0).show(ui, |ui| {
                         for (id, p) in app.session.journal.iter().rev().take(500) {
@@ -1550,8 +1550,9 @@ fn form_fields(ui: &mut egui::Ui, d: &mut Dialog) {
 }
 
 /// Help ▸ About Rustina Gride: the app and who makes it. One page — the tab row it used to have
-/// (About / Contributors / Models) was navigation between one page and two lists.
-fn about(ui: &mut egui::Ui, _d: &mut Dialog) {
+/// (About / Contributors / Models) was navigation between one page and two lists. Drawn by the Help
+/// dialog and by the phone File list's About row.
+pub(crate) fn about_body(ui: &mut egui::Ui) {
     ui.heading(BRAND_FULL);
     ui.label(format!("Version {}", env!("CARGO_PKG_VERSION")));
     ui.add_space(4.0);
