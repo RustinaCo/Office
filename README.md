@@ -5,7 +5,7 @@
 **Microsoft Office, on your phone — the same three apps, the same ribbon, the same options as the
 desktop, rebuilt lightweight for Android.**
 
-[English](README.md) · [فارسی](README.fa.md) · [Word](Word/README.md) · [Excel](Excel/README.md) · [PowerPoint](PowerPoint/README.md)
+[English](README.md) · [فارسی](README.fa.md) · [Write](Write/README.md) · [Gride](Gride/README.md) · [Slides](Slides/README.md)
 
 ![Platform: Android 10+](https://img.shields.io/badge/Android-10%2B%20(arm64)-3ddc84?style=flat-square&logo=android&logoColor=white)
 ![Written in Rust](https://img.shields.io/badge/written%20in-Rust-b7410e?style=flat-square&logo=rust&logoColor=white)
@@ -18,13 +18,15 @@ desktop, rebuilt lightweight for Android.**
 
 ## What this is
 
-Rustina Office is three Android apps that bring the desktop workflow you already know to a phone:
+Rustina Office is three Android apps — a word processor, a spreadsheet and presentations — that bring
+the desktop workflow you already know to a phone. They read and write the Office file formats, so the
+work you already have opens here:
 
 | App | What it is | Open | Save |
 |---|---|---|---|
-| **[Rustina Word](Word/README.md)** | A word processor — documents, styles, tables, track changes, references, mail merge | `.docx`, `.txt`, `.md`, `.html`, `.rtf`, `.odt` | `.docx`, `.pdf`, `.txt`, `.html` |
-| **[Rustina Exel](Excel/README.md)** | A spreadsheet — formulas, formatting, tables, charts, data tools | `.xlsx`, `.csv` | `.xlsx`, `.csv`, `.pdf` |
-| **[Rustina PowerPoint](PowerPoint/README.md)** | Presentations — themes, layouts, shapes, pictures, charts, transitions, animations, slide shows | `.pptx` | `.pptx`, `.pdf` |
+| **[Rustina Write](Write/README.md)** | A word processor — documents, styles, tables, track changes, references, mail merge | `.docx`, `.txt`, `.md`, `.html`, `.rtf`, `.odt` | `.docx`, `.pdf`, `.txt`, `.html` |
+| **[Rustina Gride](Gride/README.md)** | A spreadsheet — formulas, formatting, tables, charts, data tools | `.xlsx`, `.csv` | `.xlsx`, `.csv`, `.pdf` |
+| **[Rustina Slides](Slides/README.md)** | Presentations — themes, layouts, shapes, pictures, charts, transitions, animations, slide shows | `.pptx` | `.pptx`, `.pdf` |
 
 The whole suite is written in **Rust** — one engine, one UI, three apps — and the Android build reuses
 the *same* desktop front end: the ribbon, the tabs, the dialogs and every option are the ones from the
@@ -32,9 +34,13 @@ desktop apps, laid out for a touch screen. Nothing is a stripped-down "mobile ed
 
 <div align="center">
 
-| File page | Document | New document | Options |
+| **Write** — File page | Document | New document | Options |
 |---|---|---|---|
-| <img src="Word/screenshots/file-page.png" width="190"> | <img src="Word/screenshots/document.png" width="190"> | <img src="Word/screenshots/new-document.png" width="190"> | <img src="Word/screenshots/options.png" width="190"> |
+| <img src="Write/screenshots/file-page.png" width="190"> | <img src="Write/screenshots/document.png" width="190"> | <img src="Write/screenshots/new-document.png" width="190"> | <img src="Write/screenshots/options.png" width="190"> |
+| **Gride** — File page | Sheet | New workbook | Options |
+| <img src="Gride/screenshots/file-page.png" width="190"> | <img src="Gride/screenshots/grid.png" width="190"> | <img src="Gride/screenshots/new-workbook.png" width="190"> | <img src="Gride/screenshots/options.png" width="190"> |
+| **Slides** — File page | Slide | New presentation | Slide show |
+| <img src="Slides/screenshots/file-page.png" width="190"> | <img src="Slides/screenshots/slide.png" width="190"> | <img src="Slides/screenshots/new-deck.png" width="190"> | <img src="Slides/screenshots/presenting.png" width="190"> |
 
 </div>
 
@@ -58,7 +64,8 @@ desktop apps, laid out for a touch screen. Nothing is a stripped-down "mobile ed
 ## Install
 
 1. Download the APK you want from the [**v1.0.0 release**](https://github.com/RustinaCo/Office/releases/tag/v1.0.0)
-   (or from [`apk/`](apk) at that tag).
+   or from [`apk/`](apk) at that tag: **`Rustina-Write-1.0.0.apk`** (documents),
+   **`Rustina-Gride-1.0.0.apk`** (spreadsheets), **`Rustina-Slides-1.0.0.apk`** (presentations).
 2. Open it on the phone and allow installing from this source when Android asks.
 3. That's it — no account, no ads, no telemetry, no network permission.
 
@@ -88,16 +95,28 @@ Everything below is on top of the desktop apps; the desktop layout is untouched.
 
 <table>
   <tr>
-    <td align="center"><img src="Word/screenshots/file-page.png" width="200"><br><sub>File</sub></td>
-    <td align="center"><img src="Word/screenshots/document.png" width="200"><br><sub>Editing</sub></td>
-    <td align="center"><img src="Word/screenshots/new-document.png" width="200"><br><sub>New</sub></td>
-    <td align="center"><img src="Word/screenshots/options.png" width="200"><br><sub>Options</sub></td>
+    <td align="center"><img src="Write/screenshots/file-page.png" width="200"><br><sub>Write — File</sub></td>
+    <td align="center"><img src="Write/screenshots/document.png" width="200"><br><sub>Write — Editing</sub></td>
+    <td align="center"><img src="Write/screenshots/new-document.png" width="200"><br><sub>Write — New</sub></td>
+    <td align="center"><img src="Write/screenshots/about.png" width="200"><br><sub>Write — About</sub></td>
+  </tr>
+  <tr>
+    <td align="center"><img src="Gride/screenshots/file-page.png" width="200"><br><sub>Gride — File</sub></td>
+    <td align="center"><img src="Gride/screenshots/grid.png" width="200"><br><sub>Gride — Editing</sub></td>
+    <td align="center"><img src="Gride/screenshots/new-workbook.png" width="200"><br><sub>Gride — New</sub></td>
+    <td align="center"><img src="Gride/screenshots/options.png" width="200"><br><sub>Gride — Options</sub></td>
+  </tr>
+  <tr>
+    <td align="center"><img src="Slides/screenshots/file-page.png" width="200"><br><sub>Slides — File</sub></td>
+    <td align="center"><img src="Slides/screenshots/slide.png" width="200"><br><sub>Slides — Editing</sub></td>
+    <td align="center"><img src="Slides/screenshots/new-deck.png" width="200"><br><sub>Slides — New</sub></td>
+    <td align="center"><img src="Slides/screenshots/presenting.png" width="200"><br><sub>Slides — Slide show</sub></td>
   </tr>
 </table>
 
-Word's desktop build is in the same source, unchanged:
+Write's desktop build is in the same source, unchanged:
 
-<img src="Word/screenshots/desktop.png" width="640">
+<img src="Write/screenshots/desktop.png" width="640">
 
 ## Building from source
 
@@ -110,7 +129,7 @@ rustup target add aarch64-linux-android
 cargo install cargo-apk
 
 # Android SDK/NDK, then, in any app folder's android/ directory:
-cd Word/word-android
+cd Write/word-android
 export ANDROID_HOME=$HOME/Android/Sdk
 export ANDROID_NDK_ROOT=$HOME/Android/Sdk/ndk/<version>
 cargo apk build --lib --release     # cargo-apk ≥ 0.10: `cargo apk2 build --lib --release`

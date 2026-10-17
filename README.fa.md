@@ -5,7 +5,7 @@
 **مایکروسافت آفیس، روی گوشی‌ات — همان سه برنامه، همان ریبون و همان تنظیمات نسخه کامپیوتری، سبک و
 سریع برای اندروید.**
 
-[English](README.md) · [فارسی](README.fa.md) · [ورد](Word/README.md) · [اکسل](Excel/README.md) · [پاورپوینت](PowerPoint/README.md)
+[English](README.md) · [فارسی](README.fa.md) · [Write](Write/README.md) · [Gride](Gride/README.md) · [Slides](Slides/README.md)
 
 </div>
 
@@ -19,9 +19,9 @@
 
 | برنامه | چیست | باز کردن | ذخیره |
 |---|---|---|---|
-| **[رستینا ورد](Word/README.md)** | واژه‌پرداز — سند، استایل، جدول، رد تغییرات، ارجاع‌ها، ادغام پستی | `.docx`، `.txt`، `.md`، `.html`، `.rtf`، `.odt` | `.docx`، `.pdf`، `.txt`، `.html` |
-| **[رستینا اکسل](Excel/README.md)** | صفحه‌گسترده — فرمول، قالب‌بندی، جدول، نمودار، ابزارهای داده | `.xlsx`، `.csv` | `.xlsx`، `.csv`، `.pdf` |
-| **[رستینا پاورپوینت](PowerPoint/README.md)** | ارائه — تم، طرح‌بندی، شکل، تصویر، نمودار، انتقال، انیمیشن، نمایش اسلاید | `.pptx` | `.pptx`، `.pdf` |
+| **[Rustina Write](Write/README.md)** | واژه‌پرداز — سند، استایل، جدول، رد تغییرات، ارجاع‌ها، ادغام پستی | `.docx`، `.txt`، `.md`، `.html`، `.rtf`، `.odt` | `.docx`، `.pdf`، `.txt`، `.html` |
+| **[Rustina Gride](Gride/README.md)** | صفحه‌گسترده — فرمول، قالب‌بندی، جدول، نمودار، ابزارهای داده | `.xlsx`، `.csv` | `.xlsx`، `.csv`، `.pdf` |
+| **[Rustina Slides](Slides/README.md)** | ارائه — تم، طرح‌بندی، شکل، تصویر، نمودار، انتقال، انیمیشن، نمایش اسلاید | `.pptx` | `.pptx`، `.pdf` |
 
 کل مجموعه با **Rust** نوشته شده — یک موتور، یک رابط کاربری، سه برنامه — و نسخه اندروید دقیقاً همان
 رابط نسخه کامپیوتری را استفاده می‌کند: ریبون، تب‌ها، پنجره‌ها و همهٔ تنظیمات. هیچ‌چیز نسخهٔ کم‌وبیش
@@ -29,9 +29,13 @@
 
 <div align="center">
 
-| صفحهٔ فایل | سند | سند جدید | تنظیمات |
+| **Write** — صفحهٔ فایل | سند | سند جدید | تنظیمات |
 |---|---|---|---|
-| <img src="Word/screenshots/file-page.png" width="190"> | <img src="Word/screenshots/document.png" width="190"> | <img src="Word/screenshots/new-document.png" width="190"> | <img src="Word/screenshots/options.png" width="190"> |
+| <img src="Write/screenshots/file-page.png" width="190"> | <img src="Write/screenshots/document.png" width="190"> | <img src="Write/screenshots/new-document.png" width="190"> | <img src="Write/screenshots/options.png" width="190"> |
+| **Gride** — صفحهٔ فایل | صفحه‌گسترده | کارپوشهٔ جدید | تنظیمات |
+| <img src="Gride/screenshots/file-page.png" width="190"> | <img src="Gride/screenshots/grid.png" width="190"> | <img src="Gride/screenshots/new-workbook.png" width="190"> | <img src="Gride/screenshots/options.png" width="190"> |
+| **Slides** — صفحهٔ فایل | اسلاید | ارائهٔ جدید | نمایش اسلاید |
+| <img src="Slides/screenshots/file-page.png" width="190"> | <img src="Slides/screenshots/slide.png" width="190"> | <img src="Slides/screenshots/new-deck.png" width="190"> | <img src="Slides/screenshots/presenting.png" width="190"> |
 
 </div>
 
@@ -88,7 +92,7 @@
 rustup target add aarch64-linux-android
 cargo install cargo-apk
 
-cd Word/word-android
+cd Write/word-android
 export ANDROID_HOME=$HOME/Android/Sdk
 export ANDROID_NDK_ROOT=$HOME/Android/Sdk/ndk/<version>
 cargo apk build --lib --release     # cargo-apk ≥ 0.10: cargo apk2 build --lib --release

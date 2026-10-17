@@ -1,0 +1,86 @@
+[package]
+name = "gridcraft-android"
+version = "0.7.0"
+edition = "2024"
+description = "GridCraft on Android (same engine + egui UI, Android backend)"
+license = "MIT OR Apache-2.0"
+
+[lib]
+name = "gridcraft_android"
+crate-type = ["cdylib", "rlib"]
+
+[[bin]]
+name = "gridcraft-android-desktop"
+path = "src/main.rs"
+
+[dependencies]
+# Same engine + UI crates as the desktop app, by path (upstream clone untouched).
+gridcraft-engine = { path = "../gridcraft/crates/engine" }
+gridcraft-ui-egui = { path = "../gridcraft/crates/ui-egui" }
+# Pinned to the exact versions the upstream workspace uses (see gridcraft/Cargo.lock).
+eframe = { version = "=0.36.2", default-features = false, features = ["default_fonts", "wgpu", "android-native-activity"] }
+egui = "=0.36.2"
+winit = "=0.30.13"
+serde_json = "1"
+log = "0.4"
+
+[target.'cfg(target_os = "android")'.dependencies]
+# System-bar insets over JNI (pinned to android-activity's own jni).
+jni = "=0.22.4"
+
+[profile.release]
+opt-level = "z"
+lto = "fat"
+codegen-units = 1
+strip = true
+panic = "abort"
+
+[package.metadata.android]
+package = "net.craftsuite.gridcraft"
+build_targets = ["aarch64-linux-android"]
+java_sources = "android/java"
+resources = "android/res"
+
+[package.metadata.android.sdk]
+min_sdk_version = 29
+target_sdk_version = 35
+
+[package.metadata.android.application]
+icon = "@mipmap/ic_launcher"
+label = "Rustina Gride"
+theme = "@android:style/Theme.DeviceDefault.NoActionBar"
+
+[[package.metadata.android.application.activity]]
+name = "android.app.NativeActivity"
+exported = true
+config_changes = "orientation|keyboardHidden|screenSize|screenLayout|smallestScreenSize|density|layoutDirection"
+window_soft_input_mode = "adjustResize"
+label = "Rustina Gride"
+
+[[package.metadata.android.application.activity.meta_data]]
+name = "android.app.lib_name"
+value = "gridcraft_android"
+
+[[package.metadata.android.application.activity.intent_filter]]
+actions = ["android.intent.action.MAIN"]
+categories = ["android.intent.category.LAUNCHER"]
+
+# Inbound shares: file manager / browser › Share › Exel opens the file.
+[[package.metadata.android.application.activity.intent_filter]]
+actions = ["android.intent.action.SEND"]
+categories = ["android.intent.category.DEFAULT"]
+
+[[package.metadata.android.application.activity.intent_filter.data]]
+mime_type = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+
+[[package.metadata.android.application.activity.intent_filter.data]]
+mime_type = "text/csv"
+
+[[package.metadata.android.application.activity.intent_filter.data]]
+mime_type = "application/pdf"
+
+# Transparent helper that runs the system file picker (SAF) and stashes the
+# result for the Rust side to poll (a NativeActivity gets no activity result).
+[[package.metadata.android.application.activity]]
+name = ".FilePickerActivity"
+exported = false
