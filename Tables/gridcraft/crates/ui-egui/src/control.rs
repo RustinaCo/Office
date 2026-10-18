@@ -198,6 +198,13 @@ pub fn handle(app: &mut SheetApp, ctx: &egui::Context, method: &str, p: &Json) -
                 ("app.language.set", "Interface Language", "{language: \"en\"|\"zh\"|\"ja\"|\"ko\"|\"ru\"|\"pt\"|\"de\"|\"cs\"} (alias: code)"),
                 ("app.language.english", "Interface Language: English", ""),
                 ("app.language.japanese", "Interface Language: Japanese", ""),
+                (
+                    "font.add",
+                    "Add Font…",
+                    "{path?: string, data?: base64, name?: string (file name for \"data\")} — a TTF, OTF, TTC or OTC file; none: pick a file → {file,families,faces,path,warning?}",
+                ),
+                ("font.list", "Added Fonts", "{all?: bool (also every available family)}"),
+                ("font.remove", "Remove Added Font", "{family: string}"),
             ] {
                 v.push(json!({"id": id, "label": label, "params": params, "enabled": true, "ui": true}));
             }

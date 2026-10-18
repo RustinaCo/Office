@@ -1167,6 +1167,9 @@ fn options(app: &mut SheetApp, ui: &mut Ui) {
     if ui.checkbox(&mut autosave, lang.tr("Save .xlsx workbooks automatically after every change")).changed() {
         app.grid.toggle_autosave();
     }
+    ui.add_space(18.0);
+    section(ui, lang, "Options|Fonts");
+    fonts_section(app, ui, lang);
     let Some(calc) = app.session.active().map(|d| d.wb.calc.clone()) else { return };
     ui.add_space(18.0);
     section(ui, lang, "Formulas");
@@ -1188,6 +1191,35 @@ fn options(app: &mut SheetApp, ui: &mut Ui) {
     }
     ui.add_space(6.0);
     dim(ui, lang.tr("Calculation settings are saved with the workbook."));
+}
+
+/// Options ▸ Fonts (#582): the fonts the user added, each removable, and a button to add one. The
+/// fonts are stored in the app's settings folder and loaded again at the next start.
+fn fonts_section(app: &mut SheetApp, ui: &mut Ui, lang: i18n::Language) {
+    ui.label(lang.tr("Fonts you add are stored and loaded again at the next start."));
+    ui.add_space(4.0);
+    let user = crate::fonts::user_fonts();
+    if user.is_empty() {
+        dim(ui, lang.tr("No fonts added yet."));
+    } else {
+        for f in &user {
+            ui.horizontal(|ui| {
+                ui.label(f.families.join(", "));
+                if let Some(family) = f.families.first()
+                    && ui.button(lang.tr("Remove")).clicked()
+                {
+                    app.run_or_alert("font.remove", json!({"family": family}));
+                }
+            });
+        }
+    }
+    ui.add_space(6.0);
+    if ui.button(lang.tr("Add Font…")).clicked() {
+        app.run_or_alert("font.add", json!({}));
+    }
+    if let Some(dir) = crate::fonts::user_font_dir() {
+        dim(ui, &dir.display().to_string());
+    }
 }
 
 #[cfg(test)]

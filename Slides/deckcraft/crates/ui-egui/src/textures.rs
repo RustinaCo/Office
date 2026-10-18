@@ -50,6 +50,17 @@ pub struct Textures {
     pub last_render_ms: f64,
 }
 
+impl Textures {
+    /// Drop every cached render. Adding a font changes how the same slide draws, and the cache is
+    /// keyed on the slide/master `Arc` identity, which a font doesn't touch.
+    pub fn clear(&mut self) {
+        self.canvas = None;
+        self.estimate = None;
+        self.drawn = None;
+        self.thumbs.clear();
+    }
+}
+
 /// The GPU's maximum texture dimension, as egui learned it from the renderer
 /// (Android GPUs commonly allow 8192). Canvas renders are clamped to it: a
 /// large zoom must never ask the GPU for a texture it will refuse — wgpu

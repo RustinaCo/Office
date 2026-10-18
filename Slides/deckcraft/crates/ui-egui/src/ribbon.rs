@@ -643,6 +643,11 @@ fn font_group(app: &mut SlideApp, ui: &mut Ui, st: &Value) {
                             ui.separator();
                         }
                     }
+                    ui.separator();
+                    if ui.button("Add Font…").clicked() {
+                        run(app, "app.addFont", json!({}));
+                        ui.close();
+                    }
                 });
                 let size_text = size.map(|s| widgets::fmt_num(s, "")).unwrap_or_default();
                 dropdown(ui, "size", &size_text, 52.0, en, |ui| {

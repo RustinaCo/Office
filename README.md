@@ -16,7 +16,7 @@ desktop, rebuilt lightweight for Android.**
 
 **Download — direct APK links:**
 [**Rustina Write** · 18.3 MB](https://github.com/RustinaCo/Office/raw/v1.0.2/apk/Rustina-Write-1.0.2.apk) ·
-[**Rustina Tables** · 9.3 MB](https://github.com/RustinaCo/Office/raw/v1.0.2/apk/Rustina-Tables-1.0.2.apk) ·
+[**Rustina Tables** · 9.4 MB](https://github.com/RustinaCo/Office/raw/v1.0.2/apk/Rustina-Tables-1.0.2.apk) ·
 [**Rustina Slides** · 12.8 MB](https://github.com/RustinaCo/Office/raw/v1.0.2/apk/Rustina-Slides-1.0.2.apk)
 
 </div>
@@ -29,7 +29,7 @@ desktop, rebuilt lightweight for Android.**
   you and your file.
 - **No ads, no telemetry, and no network permission at all.** Android will not let these apps phone
   home, because they never ask for the permission.
-- **Small.** 18.3 MB / 9.3 MB / 12.8 MB per app, fonts included — a fraction of the size of the
+- **Small.** 18.3 MB / 9.4 MB / 12.8 MB per app, fonts included — a fraction of the size of the
   mainstream suites.
 - **It opens the real files.** `.docx`, `.xlsx`, `.pptx` and friends open, edit and save back in the
   same format — the work you already have on your computer opens here.
@@ -43,6 +43,9 @@ desktop, rebuilt lightweight for Android.**
 - **Persian and English, done properly.** A translated interface (Persian and English first), 22
   open-licensed Persian/Arabic font families and five metric-compatible Latin ones compiled in, and
   right-to-left text laid out correctly.
+- **Fonts: bring your own, too.** **Add Font…** in Options takes any family already on your phone —
+  B Nazanin, B Titr, B Yekan, IRANSans and the rest — and puts it in the font list of Write, Tables
+  and Slides, alongside the 27 bundled families.
 - **Open source, in Rust.** One engine, one UI, three apps, MIT-licensed — and the same source builds
   the desktop versions (Linux, macOS, Windows, BSD) and the web.
 - **Android 10 (API 29) or newer, arm64-v8a**, side-loaded, no Play Store account needed.
@@ -113,7 +116,7 @@ your Android version — and it gets fixed quickly.
 1. Download the APK you want — these links download the file straight away, no release page needed:
    - **Rustina Write** (documents, 18.3 MB) —
      [Rustina-Write-1.0.2.apk](https://github.com/RustinaCo/Office/raw/v1.0.2/apk/Rustina-Write-1.0.2.apk)
-   - **Rustina Tables** (spreadsheets, 9.3 MB) —
+   - **Rustina Tables** (spreadsheets, 9.4 MB) —
      [Rustina-Tables-1.0.2.apk](https://github.com/RustinaCo/Office/raw/v1.0.2/apk/Rustina-Tables-1.0.2.apk)
    - **Rustina Slides** (presentations, 12.8 MB) —
      [Rustina-Slides-1.0.2.apk](https://github.com/RustinaCo/Office/raw/v1.0.2/apk/Rustina-Slides-1.0.2.apk)
@@ -168,9 +171,11 @@ its app folder works on Linux, macOS, Windows and BSD, and the same crates compi
 
 ## Credits
 
-This suite stands on the **ArtCraft team**'s open-source work — the original clean-room
-WordCraft / GridCraft / DeckCraft engine and interface — released under MIT OR Apache-2.0. Thank you.
-Full credit, links and licence texts: [`CREDITS.md`](CREDITS.md).
+This suite would not exist without the **ArtCraft team**. The original clean-room WordCraft /
+GridCraft / DeckCraft engine and the interface these apps are built on are their open-source work,
+released under MIT OR Apache-2.0 — they chose to publish it openly instead of keeping it, and that is
+the only reason Rustina Office is here at all. **Thank you, sincerely.** Full credit, links and
+licence texts: [`CREDITS.md`](CREDITS.md).
 
 ## Contributing
 

@@ -1202,6 +1202,10 @@ fn home(app: &mut SheetApp, ui: &mut Ui) {
     });
 }
 
+/// The sentinel the font list ends with: choosing it runs `font.add`, which opens the font
+/// picker. `\u{1}` can't come from the filter field, so it never collides with a family name.
+const ADD_FONT: &str = "\u{1}font.add";
+
 fn font_combo(app: &mut SheetApp, ui: &mut Ui, st: &Style) {
     let name = st.font.name.clone();
     let resp = ui.add_sized([150.0, 24.0], egui::Button::new(egui::RichText::new(&name).font(theme::ui_font(12.5))));
@@ -1209,11 +1213,17 @@ fn font_combo(app: &mut SheetApp, ui: &mut Ui, st: &Style) {
     let forced = invoke(app, "home.fontName");
     // Every installed family, not just the standard names: the fonts the app ships (the Persian
     // and Arabic families among them) and anything the user dropped in the font folder are real
-    // choices, which is what makes them usable in cells.
+    // choices, which is what makes them usable in cells. The list ends with Add Font…, which
+    // installs a font file the user picked so it shows up here on the next frame.
     let names = crate::fonts::families();
-    let items: Vec<(&str, String)> = names.iter().map(|f| (f.as_str(), f.clone())).collect();
+    let mut items: Vec<(&str, String)> = names.iter().map(|f| (f.as_str(), f.clone())).collect();
+    items.push((ADD_FONT, app.ui.language.tr("Add Font…").to_string()));
     if let ComboResult::Picked(value) = editable_combo(ui, &resp, "font", &name, &items, forced) {
-        act(app, "home.fontName", json!({"name": value}));
+        if value == ADD_FONT {
+            act(app, "font.add", json!({}));
+        } else {
+            act(app, "home.fontName", json!({"name": value}));
+        }
     }
 }
 

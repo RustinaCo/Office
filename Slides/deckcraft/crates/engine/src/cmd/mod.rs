@@ -5,6 +5,7 @@ pub mod arrange;
 pub mod design;
 pub mod edit;
 pub mod file;
+pub mod font;
 pub mod format;
 pub mod insert;
 pub mod inspect;
@@ -126,6 +127,7 @@ pub fn command_specs() -> &'static [CommandSpec] {
     SPECS.get_or_init(|| {
         let mut v = Vec::new();
         v.extend(file::specs());
+        v.extend(font::specs());
         v.extend(edit::specs());
         v.extend(slide::specs());
         v.extend(insert::specs());

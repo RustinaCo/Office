@@ -97,6 +97,19 @@ fn log_dir() -> Option<std::path::PathBuf> {
     Some(config_dir()?.join("logs"))
 }
 
+/// Fonts the user added (#582) live in `fonts` in the settings folder: load them, and store fonts
+/// added later there, so an added font is still there on the next launch.
+fn load_user_fonts() {
+    if !prefs_enabled() {
+        return;
+    }
+    let Some(dir) = config_dir().map(|d| d.join("fonts")) else { return };
+    let (loaded, skipped) = gridcraft_ui_egui::fonts::load_user_fonts(&dir);
+    if !loaded.is_empty() || !skipped.is_empty() {
+        log::info!("user fonts: {} loaded, {} skipped from {}", loaded.len(), skipped.len(), dir.display());
+    }
+}
+
 fn load_prefs(app: &mut SheetApp) {
     if !prefs_enabled() {
         return;
@@ -175,6 +188,12 @@ fn services() -> Services {
         pick_picture: Some(Box::new(|| {
             rfd::FileDialog::new()
                 .add_filter("Pictures (PNG, JPEG)", &["png", "jpg", "jpeg"])
+                .pick_file()
+                .and_then(|p| p.to_str().map(str::to_string))
+        })),
+        pick_font: Some(Box::new(|| {
+            rfd::FileDialog::new()
+                .add_filter("Fonts (TrueType, OpenType, TTC)", &["ttf", "otf", "ttc", "otc"])
                 .pick_file()
                 .and_then(|p| p.to_str().map(str::to_string))
         })),
@@ -302,6 +321,7 @@ fn main() -> eframe::Result<()> {
     app.after_engine(); // Show warnings from the sample.
     let control_port = control_port;
     load_prefs(&mut app);
+    load_user_fonts();
     // Files named on the command line (a double-click on Windows and Linux) open as File › Open
     // opens them: a password-protected one asks for its password, and errors are shown, not
     // only logged. Each replaces the untouched blank Book1, as a file opened from Finder does.

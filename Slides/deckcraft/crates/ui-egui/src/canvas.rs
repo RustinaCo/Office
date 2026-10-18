@@ -72,6 +72,10 @@ pub fn show(app: &mut SlideApp, ui: &mut Ui) {
     let mut offset: egui::Vec2 = ui.data_mut(|d| d.get_temp(scroll_id).unwrap_or_default());
     let overflow = vec2((content_rect.width() + 56.0 - avail.width()).max(0.0), (content_rect.height() + 56.0 - avail.height()).max(0.0));
     let resp = ui.allocate_rect(avail, Sense::click_and_drag());
+    if resp.is_pointer_button_down_on() {
+        // A tap on the slide keeps editing: bring the keyboard back if the ribbon put it away.
+        app.keyboard_dismissed = false;
+    }
     if std::mem::take(&mut app.want_canvas_focus) {
         resp.request_focus();
     }
@@ -229,6 +233,11 @@ pub fn ime_area(app: &SlideApp, xf: Xf) -> Option<Rect> {
 fn ime_output(app: &SlideApp, ui: &Ui, xf: Xf) {
     let ctx = ui.ctx();
     if ctx.memory(|m| m.focused().is_some()) || app.dialog.as_ref().is_some_and(|d| d.modal()) || app.palette.is_some() || app.backstage_open() {
+        return;
+    }
+    // Phones: a tap on the ribbon put the keyboard away and it stays away until the slide is
+    // tapped again (see `SlideApp::keyboard_dismissed`).
+    if app.keyboard_dismissed {
         return;
     }
     let Some(r) = ime_area(app, xf) else { return };

@@ -100,6 +100,7 @@ fn services() -> Services {
                     &["wav", "mp3", "m4a", "m4b", "aac", "flac", "ogg", "oga", "opus", "aif", "aiff", "aifc", "caf", "wma", "weba", "mka"],
                 ),
                 "video" => d.add_filter("Video", &["mp4", "m4v", "mov", "webm", "mkv", "wmv"]),
+                "font" => d.add_filter("Fonts", &["ttf", "otf", "ttc", "otc"]),
                 _ => d
                     .add_filter("Presentations", &["deckcraft", "pptx", "potx", "ppsx"])
                     .add_filter("DeckCraft", &["deckcraft"])
@@ -199,6 +200,14 @@ fn main() -> eframe::Result {
         Box::new(move |cc| {
             let mut app = SlideApp::new(Session::new(), services());
             load_prefs(&mut app);
+            // Fonts the user added (<settings dir>/fonts) load before the first frame, so they
+            // are in the font lists and draw the presentations that name them.
+            if let Some(dir) = config_dir().map(|d| d.join("fonts")) {
+                let n = deckcraft_engine::fonts::load_user_fonts(&dir);
+                if n > 0 {
+                    log::info!("loaded {n} user font{}", if n == 1 { "" } else { "s" });
+                }
+            }
             // AutoRecover: reopen what a previous run left unsaved, then keep it current.
             if std::env::var_os("DECKCRAFT_NO_RECOVERY").is_none() {
                 app.session.recovery_dir = deckcraft_engine::recovery::default_dir();

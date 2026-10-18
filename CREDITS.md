@@ -5,6 +5,10 @@ says exactly who did what, and under which licence.
 
 ## The ArtCraft team — the upstream apps
 
+**Thank you.** The ArtCraft team published their engine and interface openly, and that single
+decision is the reason Rustina Office exists at all; these three apps are a rebuild of their work for
+the phone, and everything good about them starts there.
+
 The document, spreadsheet and presentation engines, the ribbon and the whole desktop interface come
 from the **ArtCraft team**'s clean-room, open-source work:
 

@@ -205,6 +205,8 @@ pub struct Services {
     pub pick_save: Option<Box<dyn Fn(&str) -> Option<String>>>,
     /// Native picture picker (PNG/JPEG), separate from workbook opening.
     pub pick_picture: Option<Box<dyn Fn() -> Option<String>>>,
+    /// Native font-file picker (TTF/OTF/TTC/OTC), separate from workbook opening.
+    pub pick_font: Option<Box<dyn Fn() -> Option<String>>>,
     /// Browser picture picker. Each dialog owns its inbox, so canceled picks cannot
     /// insert into a subsequent dialog or open the image as a workbook.
     pub pick_picture_async: Option<Box<dyn Fn(Inbox)>>,
@@ -270,6 +272,9 @@ pub struct SheetApp {
     /// The (doc uid, revision) `fonts_bound` was computed for, so the style table is walked only
     /// when the workbook changes.
     fonts_seen: (u64, u64),
+    /// The font catalog's generation `fonts_bound` was computed for: a font added or removed at
+    /// run time bumps it, forcing a rebind even though the workbook didn't change.
+    fonts_generation: u64,
     /// Set while a font-set change is pending activation: skip this frame's paint, like the
     /// startup `fonts_ready` gate (egui applies new definitions at the next pass).
     fonts_rebind: bool,
@@ -327,6 +332,7 @@ impl SheetApp {
             fonts_set: false,
             fonts_bound: Vec::new(),
             fonts_seen: (0, 0),
+            fonts_generation: 0,
             fonts_rebind: false,
             fonts_han: None,
             effective_dark: false,
@@ -641,6 +647,9 @@ impl SheetApp {
                 self.ui.autocomplete = p.get("on").and_then(Json::as_bool).unwrap_or(!self.ui.autocomplete);
                 Ok(json!({"on": self.ui.autocomplete}))
             }
+            "font.add" => self.add_font(p),
+            "font.list" => Ok(crate::fonts::list_json(p.get("all").and_then(Json::as_bool).unwrap_or(false))),
+            "font.remove" => self.remove_font(p),
             "view.interfaceScale" => {
                 // `{"percent": 125}` or `{"percent": "auto"}`; out-of-range values are clamped.
                 let percent = match p.get("percent") {
@@ -715,6 +724,51 @@ impl SheetApp {
             _ => return None,
         };
         Some(r)
+    }
+
+    /// `font.add` — add a family from a font file the user picked, dropped or passed by path.
+    ///
+    /// Params: `{"path"?: string, "data"?: base64, "name"?: string}` for a TTF/OTF/TTC/OTC file.
+    /// With none of them the platform's font picker opens (menu-style invocation); with no picker
+    /// either, the host's asynchronous file picker is asked and the font arrives through the inbox.
+    fn add_font(&mut self, p: &Json) -> Result<Json, String> {
+        if let Some(data) = p.get("data").and_then(Json::as_str) {
+            let bytes = gridcraft_engine::io::base64_decode(data).ok_or("bad base64 font data")?;
+            let name = p.get("name").and_then(Json::as_str).unwrap_or("font");
+            return self.install_font(name, &bytes);
+        }
+        if let Some(path) = p.get("path").and_then(Json::as_str) {
+            return self.install_font(&file_name_of(path), &fonts::read_font_file(path).map_err(|e| e.to_string())?);
+        }
+        if let Some(pick) = &self.services.pick_font {
+            if let Some(path) = pick() {
+                return self.install_font(&file_name_of(&path), &fonts::read_font_file(&path).map_err(|e| e.to_string())?);
+            }
+            return Ok(json!({"cancelled": true}));
+        }
+        if let Some(start) = &self.services.open_async {
+            // Web/phone: the picker delivers the file through the inbox, which routes a font name
+            // to this command again (with the bytes).
+            start();
+            return Ok(json!({"pending": true}));
+        }
+        Err("Adding a font needs a file picker, which isn't available here.".into())
+    }
+
+    /// Add `bytes` (a font file named `name`) and toast the families it added.
+    fn install_font(&mut self, name: &str, bytes: &[u8]) -> Result<Json, String> {
+        let r = fonts::install_font(name, bytes).map_err(|e| e.to_string())?;
+        let families = r.font.families.join(", ");
+        self.toast = Some((format!("Added {families}"), now_ms()));
+        Ok(fonts::font_json(&r.font, r.warning))
+    }
+
+    /// `font.remove` — forget the user fonts that added `family` and delete their stored files.
+    fn remove_font(&mut self, p: &Json) -> Result<Json, String> {
+        let family = p.get("family").and_then(Json::as_str).map(str::trim).filter(|f| !f.is_empty()).ok_or("family is required")?;
+        let gone = fonts::remove_user_font(family).map_err(|e| e.to_string())?;
+        self.toast = Some((format!("Removed {family}"), now_ms()));
+        Ok(json!({"removed": gone.iter().map(|f| fonts::font_json(f, None)).collect::<Vec<_>>()}))
     }
 
     /// Picks up requests commands made (dialogs, edit mode…).
@@ -1104,6 +1158,14 @@ impl SheetApp {
             // Bind the workbook's installed fonts once the background scan has finished. Adding
             // fonts re-applies the font set, which egui activates at the next pass, so skip this
             // frame's paint (same one-frame cost as startup). Only when the workbook changed.
+            let generation = fonts::generation();
+            if generation != self.fonts_generation {
+                // A font was added or removed somewhere (this app, the web shell, another window):
+                // bind the set again even though the workbook didn't change.
+                self.fonts_generation = generation;
+                self.fonts_seen = (0, 0);
+                self.fonts_bound.clear();
+            }
             let seen = self.session.active().map(|d| (d.uid, d.revision)).unwrap_or((0, 0));
             if seen != self.fonts_seen {
                 let used = self.used_fonts();
@@ -1152,6 +1214,13 @@ impl SheetApp {
             .unwrap_or_default();
         for (name, bytes) in arrived {
             let b64 = gridcraft_engine::io::base64_encode(&bytes);
+            // A dropped or picked font file is added to the font list, not opened as a workbook.
+            if crate::fonts::is_font_file_name(&name) {
+                if let Err(e) = self.run("font.add", json!({"name": &name, "data": &b64})) {
+                    self.message = Some((BRAND.into(), clean_error(&e)));
+                }
+                continue;
+            }
             match self.run("file.open", json!({"name": &name, "base64": &b64})) {
                 // A file picked from File › Open (web) arrives here: show it, not the Backstage.
                 Ok(r) => {
@@ -1368,4 +1437,9 @@ pub fn now_ms() -> f64 {
 
 pub fn cell(r: u32, c: u32) -> CellRef {
     CellRef::new(r, c)
+}
+
+/// The file name of a path (its last component), or the whole string when it has none.
+fn file_name_of(path: &str) -> String {
+    std::path::Path::new(path).file_name().and_then(|n| n.to_str()).unwrap_or(path).to_string()
 }

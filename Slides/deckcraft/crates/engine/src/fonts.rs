@@ -45,8 +45,7 @@ fn used_fonts(p: &Presentation) -> Vec<String> {
     out
 }
 
-fn body_fonts(ctx: &Ctx, s: &Shape, body: &TextBody, add: &mut dyn FnMut(String)) {
-    for para in &body.paragraphs {
+fn body_fonts(ctx: &Ctx, s: &Shape, body: &TextBody, add: &mut dyn FnMut(String)) {    for para in &body.paragraphs {
         let has_text = para.runs.iter().any(|r| !r.text.trim().is_empty());
         if !has_text {
             continue;
@@ -62,4 +61,16 @@ fn body_fonts(ctx: &Ctx, s: &Shape, body: &TextBody, add: &mut dyn FnMut(String)
             add(ctx.master.theme.font(f));
         }
     }
+}
+
+/// Load the fonts the end user added from `dir` into the process-wide font database (the desktop
+/// app and the Android shell call this at start-up with their `fonts` folder; the folder is made
+/// when the first font is stored). A file that can't be read is logged and skipped. Returns how
+/// many fonts loaded.
+pub fn load_user_fonts(dir: &std::path::Path) -> usize {
+    let (loaded, skipped) = FontDb::global().load_user_fonts(dir);
+    for (file, why) in &skipped {
+        log::warn!("skipped the user font {file}: {why}");
+    }
+    loaded.len()
 }

@@ -200,6 +200,7 @@ pub const UI_COMMANDS: &[(&str, &str, Option<&str>, &str)] = &[
     ("app.palette", "Command Palette", Some("Cmd+Shift+P"), "{}"),
     ("app.preferences", "Preferences…", Some("Cmd+,"), "{}"),
     ("app.openDialog", "Open…", None, "{purpose?}"),
+    ("app.addFont", "Add Font…", None, "{}"),
     ("app.insertPictureDialog", "Picture from File…", None, "{}"),
     ("app.insertAudioDialog", "Audio from File…", None, "{}"),
     ("app.insertVideoDialog", "Video from File…", None, "{}"),
@@ -236,6 +237,10 @@ pub struct SlideApp {
     /// Hand keyboard focus back to the canvas after a ribbon command, so
     /// typing/selection continue where they were (consumed in canvas show).
     pub want_canvas_focus: bool,
+    /// Phone: the on-screen keyboard was put away by tapping the ribbon or other chrome while a
+    /// slide text box is being edited. It stays down until the slide canvas is tapped again
+    /// (`canvas::ime_output` skips asking the shell for the keyboard while this is set).
+    pub keyboard_dismissed: bool,
     /// Canvas screen rect and points-per-slide-point scale (for control & tests).
     pub canvas_rect: Option<egui::Rect>,
     pub canvas_scale: f32,
@@ -270,6 +275,9 @@ pub struct SlideApp {
     pub(crate) thumb_drag: Option<(usize, usize)>,
     /// Selection pane: folded groups, renaming, drag and drop.
     pub selpane: selpane::State,
+    /// The user-font generation the last frame saw; when it moves (a font was added or removed)
+    /// the cached slide renders are dropped so the new font shows.
+    font_generation: u64,
 }
 
 impl SlideApp {
@@ -290,6 +298,7 @@ impl SlideApp {
             perf: Perf { frame_ms: 0.0, render_ms: 0.0, fps: 0.0 },
             synthetic: vec![],
             want_canvas_focus: false,
+            keyboard_dismissed: false,
             canvas_rect: None,
             canvas_scale: 1.0,
             slide_rect: None,
@@ -312,6 +321,7 @@ impl SlideApp {
             ui_fonts: uifonts::UiFonts::default(),
             thumb_drag: None,
             selpane: selpane::State::default(),
+            font_generation: deckcraft_fonts::FontDb::global().generation(),
         }
     }
 
@@ -647,6 +657,7 @@ impl SlideApp {
             "app.palette" => self.palette = Some((String::new(), 0)),
             "app.preferences" => self.dialog = Some(dialogs::Dialog::new("preferences")),
             "app.openDialog" => self.pick_and_open(),
+            "app.addFont" => self.pick_and_add_font(),
             "app.insertPictureDialog" => self.pick_and_insert("picture", "insert.picture"),
             "app.insertAudioDialog" => self.pick_and_insert("audio", "insert.audio"),
             "app.insertVideoDialog" => self.pick_and_insert("video", "insert.video"),
@@ -679,6 +690,19 @@ impl SlideApp {
             }
         } else if let Some(f) = self.services.open_async.as_mut() {
             f("open");
+        }
+    }
+
+    /// "Add Font…": pick a font file the user owns and add it to the font database (`font.add`).
+    /// On a host with only an asynchronous picker (Android, web) the picked file comes back through
+    /// the inbox and is routed by its extension.
+    fn pick_and_add_font(&mut self) {
+        if let Some(pick) = self.services.pick_open.as_mut() {
+            if let Some(path) = pick("font") {
+                let _ = self.run("font.add", json!({"path": path}));
+            }
+        } else if let Some(f) = self.services.open_async.as_mut() {
+            f("font");
         }
     }
 
@@ -775,6 +799,8 @@ impl SlideApp {
                 UiRequest::PickFile { purpose } => {
                     if purpose == "saveAs" {
                         self.save_as_dialog("deckcraft");
+                    } else if purpose == "font" {
+                        self.pick_and_add_font();
                     }
                 }
                 UiRequest::Media { action, shape, ms } => {
@@ -795,10 +821,16 @@ impl SlideApp {
         }
     }
 
-    /// A dropped or picked file: presentations open, media is inserted.
+    /// A dropped or picked file: presentations open, media is inserted, fonts are added.
     pub fn open_or_insert_bytes(&mut self, name: &str, bytes: &[u8]) {
         let lower = name.to_ascii_lowercase();
         let data = deckcraft_engine::cmd::base64_encode(bytes);
+        // A font file the user picked or dropped joins the font database (never replacing an
+        // installed face) and shows up in the font lists.
+        if deckcraft_fonts::is_font_file_name(name) {
+            let _ = self.run("font.add", json!({"name": name, "data": data}));
+            return;
+        }
         let ct = deckcraft_engine::cmd::insert::content_type(name, bytes);
         let cmd = if lower.ends_with(".deckcraft")
             || lower.ends_with(".slidecraft")
@@ -854,6 +886,13 @@ impl SlideApp {
         self.drain_control(ctx);
         if self.fonts_ready {
             self.drain_inbox();
+        }
+        // A font the user added (or removed) changes how slides draw; the cached renders are keyed
+        // on slide identity, which a font doesn't touch, so drop them.
+        let font_gen = deckcraft_fonts::FontDb::global().generation();
+        if font_gen != self.font_generation {
+            self.font_generation = font_gen;
+            self.textures.clear();
         }
         if !self.synthetic.is_empty() {
             ctx.request_repaint();
@@ -1059,14 +1098,29 @@ impl SlideApp {
             // A press outside the text box the keyboard belongs to puts the keyboard away and it
             // stays away: a ribbon button, a menu, or a swipe across the canvas. Popups are left
             // alone, so a list the field opened still works.
-            if ctx.output(|o| o.ime.is_some())
-                && ctx.input(|i| i.pointer.any_pressed())
+            if ctx.input(|i| i.pointer.any_pressed())
                 && let (Some(id), Some(pos)) = (ctx.memory(|m| m.focused()), ctx.input(|i| i.pointer.interact_pos()))
                 && ctx.layer_id_at(pos).is_none_or(|l| l.order == egui::Order::Background)
                 && ctx.read_response(id).is_some_and(|r| !r.rect.contains(pos))
             {
                 ctx.memory_mut(|m| m.surrender_focus(id));
                 ctx.output_mut(|o| o.ime = None);
+            }
+            // The slide's text box is the one editor that is not an egui widget, so it keeps no
+            // focus for the shell's keyboard to follow. Remember instead whether the keyboard was
+            // put away: a tap on the ribbon or any chrome over the canvas puts it away, a tap on
+            // the slide keeps editing (`canvas::ime_output` reads this when it draws, later in the
+            // frame). The canvas rect is from the previous frame, which is right — the layout does
+            // not change under a tap.
+            if self.session.active().is_some_and(|d| d.selection.text.is_some()) {
+                if ctx.input(|i| i.pointer.any_pressed())
+                    && let Some(pos) = ctx.input(|i| i.pointer.interact_pos())
+                    && !self.canvas_rect.is_some_and(|r| r.contains(pos))
+                {
+                    self.keyboard_dismissed = true;
+                }
+            } else {
+                self.keyboard_dismissed = false;
             }
         }
         let t0 = now_ms();
