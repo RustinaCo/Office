@@ -67,9 +67,14 @@ desktop apps, laid out for a touch screen. Nothing is a stripped-down "mobile ed
 [open an issue](https://github.com/RustinaCo/Office/issues) — with what you did, your phone model and
 your Android version — and it gets fixed quickly.
 
-1. Download the APK you want from the [**v1.0.2 release**](https://github.com/RustinaCo/Office/releases/tag/v1.0.2)
-   or from [`apk/`](apk) at that tag: **`Rustina-Write-1.0.2.apk`** (documents),
-   **`Rustina-Tables-1.0.2.apk`** (spreadsheets), **`Rustina-Slides-1.0.2.apk`** (presentations).
+1. Download the APK you want — these links download the file straight away, no release page needed:
+   - **Rustina Write** (documents, 18.3 MB) —
+     [Rustina-Write-1.0.2.apk](https://github.com/RustinaCo/Office/raw/v1.0.2/apk/Rustina-Write-1.0.2.apk)
+   - **Rustina Tables** (spreadsheets, 9.3 MB) —
+     [Rustina-Tables-1.0.2.apk](https://github.com/RustinaCo/Office/raw/v1.0.2/apk/Rustina-Tables-1.0.2.apk)
+   - **Rustina Slides** (presentations, 12.8 MB) —
+     [Rustina-Slides-1.0.2.apk](https://github.com/RustinaCo/Office/raw/v1.0.2/apk/Rustina-Slides-1.0.2.apk)
+   (All three also live in [`apk/`](apk), with their SHA-256 checksums.)
 2. Open it on the phone and allow installing from this source when Android asks.
 3. That's it — no account, no ads, no telemetry, no network permission.
 

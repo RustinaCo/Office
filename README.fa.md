@@ -61,7 +61,14 @@
 [ایشوی همین مخزن](https://github.com/RustinaCo/Office/issues) — همراه با کاری که کردی، مدل گوشی و
 نسخهٔ اندروید — گزارش بده تا سریع حل شود.
 
-۱. APK مورد نظر را از [**ریلیز v1.0.2**](https://github.com/RustinaCo/Office/releases/tag/v1.0.2) دانلود کن.
+۱. APK مورد نظر را دانلود کن — این لینک‌ها مستقیم خود فایل را می‌دهند و نیازی به صفحهٔ ریلیز نیست:
+   - **Rustina Write** (اسناد، ۱۸.۳ مگابایت) —
+     [Rustina-Write-1.0.2.apk](https://github.com/RustinaCo/Office/raw/v1.0.2/apk/Rustina-Write-1.0.2.apk)
+   - **Rustina Tables** (صفحه‌گسترده، ۹.۳ مگابایت) —
+     [Rustina-Tables-1.0.2.apk](https://github.com/RustinaCo/Office/raw/v1.0.2/apk/Rustina-Tables-1.0.2.apk)
+   - **Rustina Slides** (ارائه، ۱۲.۸ مگابایت) —
+     [Rustina-Slides-1.0.2.apk](https://github.com/RustinaCo/Office/raw/v1.0.2/apk/Rustina-Slides-1.0.2.apk)
+   (هر سه در همین تگ در [`apk/`](apk) هم هستند، همراه با SHA-256.)
 
 ۲. روی گوشی بازش کن و وقتی اندروید اجازه خواست، نصب از این منبع را تأیید کن.
 
