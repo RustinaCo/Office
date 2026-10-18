@@ -22,13 +22,15 @@ screen. `.xlsx` is the native format, so your workbooks are the same files you u
 
 <table>
   <tr>
-    <td align="center"><img src="screenshots/file-page.png" width="200"><br><sub>The File page</sub></td>
     <td align="center"><img src="screenshots/grid.png" width="200"><br><sub>Editing a sheet</sub></td>
     <td align="center"><img src="screenshots/new-workbook.png" width="200"><br><sub>New workbook</sub></td>
     <td align="center"><img src="screenshots/options.png" width="200"><br><sub>Options</sub></td>
     <td align="center"><img src="screenshots/about.png" width="200"><br><sub>About</sub></td>
   </tr>
 </table>
+
+The **File page** the app opens on is the same on all three apps and is shown in the
+[Rustina Office README](../README.md).
 
 **First release** — hit a bug? [Open an issue](https://github.com/RustinaCo/Office/issues) with what you did, your phone model and your Android version, and it gets fixed quickly.
 

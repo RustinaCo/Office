@@ -19,13 +19,15 @@ opens and saves the file formats you already have.
 
 <table>
   <tr>
-    <td align="center"><img src="screenshots/file-page.png" width="200"><br><sub>The File page</sub></td>
     <td align="center"><img src="screenshots/document.png" width="200"><br><sub>Editing</sub></td>
     <td align="center"><img src="screenshots/new-document.png" width="200"><br><sub>New document</sub></td>
     <td align="center"><img src="screenshots/options.png" width="200"><br><sub>Options</sub></td>
     <td align="center"><img src="screenshots/about.png" width="200"><br><sub>About</sub></td>
   </tr>
 </table>
+
+The **File page** the app opens on is the same on all three apps and is shown in the
+[Rustina Office README](../README.md).
 
 **First release** — hit a bug? [Open an issue](https://github.com/RustinaCo/Office/issues) with what you did, your phone model and your Android version, and it gets fixed quickly.
 

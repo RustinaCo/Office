@@ -62,6 +62,17 @@ impl B {
     }
 }
 
+/// A decorative, non-placeholder shape in one of the theme's colours: the layouts' own design.
+/// Every layout carries the same accent, so a deck built from a theme reads as one template
+/// instead of plain pages, and the colour can never "belong" to one slide and not the next.
+fn accent_bar(b: &mut B, name: &str, slot: SchemeSlot, x: f64, y: f64, w: f64, h: f64) -> Shape {
+    let mut s = b.shape(name, PhType::Title, 0, x, y, w, h);
+    s.ph = None;
+    s.text = None;
+    s.fill = Some(Fill::solid(ColorRef::scheme(slot)));
+    s
+}
+
 fn level(size: f64, margin: f64, indent: f64, before: f64) -> LevelStyle {
     LevelStyle {
         para: ParaProps {
@@ -216,6 +227,11 @@ pub fn build_master(size: Size, theme: Theme, first_id: u32) -> (Master, u32) {
     // Master placeholders.
     let mut mshapes = vec![title_box(&mut b), body_box(&mut b, "Text Placeholder 2", 1, 60.0, 144.0, 840.0, 343.0)];
     mshapes.extend(footers(&mut b));
+
+    // The master's own design, in the theme's colours: a band across the top and a rail down the
+    // left, so every slide of a themed deck — the title slide included — carries the same accent.
+    mshapes.push(accent_bar(&mut b, "Accent Band", SchemeSlot::Accent1, 0.0, 0.0, 960.0, 18.0));
+    mshapes.push(accent_bar(&mut b, "Accent Rail", SchemeSlot::Accent1, 0.0, 0.0, 14.0, 540.0));
     for s in &mut mshapes {
         let kind = s.ph_type();
         if let Some(t) = s.text.as_mut()
@@ -304,6 +320,7 @@ pub fn build_master(size: Size, theme: Theme, first_id: u32) -> (Master, u32) {
         let c = body_with_ph(body_box(&mut b, "Content Placeholder 2", 1, 60.0, 144.0, 840.0, 343.0), PhType::Obj);
         let mut v = vec![t, c];
         v.extend(footers(&mut b));
+        v.push(accent_bar(&mut b, "Accent Rail", SchemeSlot::Accent1, 0.0, 0.0, 14.0, 540.0));
         lay(&mut b, "Title and Content", LayoutType::TitleAndContent, v);
     }
     // Section Header
@@ -331,6 +348,7 @@ pub fn build_master(size: Size, theme: Theme, first_id: u32) -> (Master, u32) {
         }
         let mut v = vec![t, s];
         v.extend(footers(&mut b));
+        v.push(accent_bar(&mut b, "Accent Rail", SchemeSlot::Accent1, 0.0, 0.0, 14.0, 540.0));
         lay(&mut b, "Section Header", LayoutType::SectionHeader, v);
     }
     // Two Content
@@ -340,6 +358,7 @@ pub fn build_master(size: Size, theme: Theme, first_id: u32) -> (Master, u32) {
         let rr = body_with_ph(body_box(&mut b, "Content Placeholder 3", 2, 488.0, 144.0, 412.0, 343.0), PhType::Obj);
         let mut v = vec![t, l, rr];
         v.extend(footers(&mut b));
+        v.push(accent_bar(&mut b, "Accent Rail", SchemeSlot::Accent1, 0.0, 0.0, 14.0, 540.0));
         lay(&mut b, "Two Content", LayoutType::TwoContent, v);
     }
     // Comparison
@@ -365,12 +384,14 @@ pub fn build_master(size: Size, theme: Theme, first_id: u32) -> (Master, u32) {
         let c2 = body_with_ph(body_box(&mut b, "Content Placeholder 5", 4, 488.0, 198.0, 412.0, 289.0), PhType::Obj);
         let mut v = vec![t, h1, c1, h2, c2];
         v.extend(footers(&mut b));
+        v.push(accent_bar(&mut b, "Accent Rail", SchemeSlot::Accent1, 0.0, 0.0, 14.0, 540.0));
         lay(&mut b, "Comparison", LayoutType::Comparison, v);
     }
     // Title Only
     {
         let mut v = vec![title_box(&mut b)];
         v.extend(footers(&mut b));
+        v.push(accent_bar(&mut b, "Accent Rail", SchemeSlot::Accent1, 0.0, 0.0, 14.0, 540.0));
         lay(&mut b, "Title Only", LayoutType::TitleOnly, v);
     }
     // Blank
@@ -400,6 +421,7 @@ pub fn build_master(size: Size, theme: Theme, first_id: u32) -> (Master, u32) {
         }
         let mut v = vec![t, c, cap];
         v.extend(footers(&mut b));
+        v.push(accent_bar(&mut b, "Accent Rail", SchemeSlot::Accent1, 0.0, 0.0, 14.0, 540.0));
         lay(&mut b, "Content with Caption", LayoutType::ContentWithCaption, v);
     }
     // Picture with Caption
@@ -425,6 +447,7 @@ pub fn build_master(size: Size, theme: Theme, first_id: u32) -> (Master, u32) {
         }
         let mut v = vec![t, p, cap];
         v.extend(footers(&mut b));
+        v.push(accent_bar(&mut b, "Accent Rail", SchemeSlot::Accent1, 0.0, 0.0, 14.0, 540.0));
         lay(&mut b, "Picture with Caption", LayoutType::PictureWithCaption, v);
     }
     // Title and Vertical Text

@@ -25,11 +25,12 @@ touch screen. It opens and saves PowerPoint `.pptx` files and presents them full
   <tr>
     <td align="center"><img src="screenshots/file-page.png" width="200"><br><sub>The File page</sub></td>
     <td align="center"><img src="screenshots/slide.png" width="200"><br><sub>Editing a slide</sub></td>
-    <td align="center"><img src="screenshots/new-deck.png" width="200"><br><sub>New presentation</sub></td>
     <td align="center"><img src="screenshots/presenting.png" width="200"><br><sub>Slide show</sub></td>
     <td align="center"><img src="screenshots/about.png" width="200"><br><sub>About</sub></td>
   </tr>
 </table>
+
+The **New presentation** gallery is shown in the [Rustina Office README](../README.md).
 
 **First release** — hit a bug? [Open an issue](https://github.com/RustinaCo/Office/issues) with what you did, your phone model and your Android version, and it gets fixed quickly.
 

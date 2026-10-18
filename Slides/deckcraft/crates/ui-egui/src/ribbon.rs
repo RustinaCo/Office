@@ -1562,6 +1562,9 @@ pub fn paint_theme_tile(p: &egui::Painter, r: Rect, th: &deckcraft_model::Theme)
                 col,
             );
         };
+        // the master's own design, on every slide: a band across the top and a rail down the left
+        bar(0.0, 0.0, 1.0, 0.035, acc(0));
+        bar(0.0, 0.0, 0.05, 1.0, acc(0));
         if title_slide {
             bar(0.12, 0.33, 0.76, 0.16, fg);
             bar(0.12, 0.54, 0.46, 0.08, soft);

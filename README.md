@@ -11,55 +11,98 @@ desktop, rebuilt lightweight for Android.**
 ![Written in Rust](https://img.shields.io/badge/written%20in-Rust-b7410e?style=flat-square&logo=rust&logoColor=white)
 ![License: MIT](https://img.shields.io/badge/license-MIT-blue?style=flat-square)
 ![Version 1.0.2](https://img.shields.io/badge/version-1.0.2-2b47b5?style=flat-square)
+![No account](https://img.shields.io/badge/account-none-2ea44f?style=flat-square)
+![No network permission](https://img.shields.io/badge/network%20permission-none-2ea44f?style=flat-square)
+
+**Download — direct APK links:**
+[**Rustina Write** · 18.3 MB](https://github.com/RustinaCo/Office/raw/v1.0.2/apk/Rustina-Write-1.0.2.apk) ·
+[**Rustina Tables** · 9.3 MB](https://github.com/RustinaCo/Office/raw/v1.0.2/apk/Rustina-Tables-1.0.2.apk) ·
+[**Rustina Slides** · 12.8 MB](https://github.com/RustinaCo/Office/raw/v1.0.2/apk/Rustina-Slides-1.0.2.apk)
 
 </div>
 
 ---
 
-## What this is
+## Why Rustina Office?
 
-Rustina Office is three Android apps — a word processor, a spreadsheet and presentations — that bring
-the desktop workflow you already know to a phone. They read and write the Office file formats, so the
-work you already have opens here:
+- **No account, ever.** Nothing to sign up for and nothing to sign into — there is no login between
+  you and your file.
+- **No ads, no telemetry, and no network permission at all.** Android will not let these apps phone
+  home, because they never ask for the permission.
+- **Small.** 18.3 MB / 9.3 MB / 12.8 MB per app, fonts included — a fraction of the size of the
+  mainstream suites.
+- **It opens the real files.** `.docx`, `.xlsx`, `.pptx` and friends open, edit and save back in the
+  same format — the work you already have on your computer opens here.
+- **Fully offline.** Edit, save, export a PDF and even run a slide show with the phone in aeroplane
+  mode. Nothing waits for a connection.
+- **Your files stay where they are.** Open and save in any folder Android's file picker can see,
+  including Google Drive, OneDrive, Dropbox, Nextcloud, Syncthing or a NAS — no import/export dance,
+  no "share to the app, edit, share back".
+- **The whole desktop, not a mobile cut-down.** The same ribbon tabs, the same dialogs and the same
+  options as the desktop apps; if you know Word, Excel or PowerPoint, you already know these.
+- **Persian and English, done properly.** A translated interface (Persian and English first), 22
+  open-licensed Persian/Arabic font families and five metric-compatible Latin ones compiled in, and
+  right-to-left text laid out correctly.
+- **Open source, in Rust.** One engine, one UI, three apps, MIT-licensed — and the same source builds
+  the desktop versions (Linux, macOS, Windows, BSD) and the web.
+- **Android 10 (API 29) or newer, arm64-v8a**, side-loaded, no Play Store account needed.
 
-| App | What it is | Open | Save |
-|---|---|---|---|
-| **[Rustina Write](Write/README.md)** | A word processor — documents, styles, tables, track changes, references, mail merge | `.docx`, `.txt`, `.md`, `.html`, `.rtf`, `.odt` | `.docx`, `.pdf`, `.txt`, `.html` |
-| **[Rustina Tables](Tables/README.md)** | A spreadsheet — formulas, formatting, tables, charts, data tools | `.xlsx`, `.csv` | `.xlsx`, `.csv`, `.pdf` |
-| **[Rustina Slides](Slides/README.md)** | Presentations — themes, layouts, shapes, pictures, charts, transitions, animations, slide shows | `.pptx` | `.pptx`, `.pdf` |
+## The three apps
 
-The whole suite is written in **Rust** — one engine, one UI, three apps — and the Android build reuses
-the *same* desktop front end: the ribbon, the tabs, the dialogs and every option are the ones from the
-desktop apps, laid out for a touch screen. Nothing is a stripped-down "mobile edition".
+One engine, one UI, three apps. The Android build reuses the *same* desktop front end — ribbon, tabs,
+dialogs and every option — laid out for a touch screen. Nothing here is a stripped-down "mobile
+edition".
 
 <div align="center">
 
-| **Write** — File page | Document | New document | Options |
-|---|---|---|---|
-| <img src="Write/screenshots/file-page.png" width="190"> | <img src="Write/screenshots/document.png" width="190"> | <img src="Write/screenshots/new-document.png" width="190"> | <img src="Write/screenshots/options.png" width="190"> |
-| **Tables** — File page | Sheet | New workbook | Options |
-| <img src="Tables/screenshots/file-page.png" width="190"> | <img src="Tables/screenshots/grid.png" width="190"> | <img src="Tables/screenshots/new-workbook.png" width="190"> | <img src="Tables/screenshots/options.png" width="190"> |
-| **Slides** — File page | Slide | New presentation | Slide show |
-| <img src="Slides/screenshots/file-page.png" width="190"> | <img src="Slides/screenshots/slide.png" width="190"> | <img src="Slides/screenshots/new-deck.png" width="190"> | <img src="Slides/screenshots/presenting.png" width="190"> |
+| **[Rustina Write](Write/README.md)** | **[Rustina Tables](Tables/README.md)** | **[Rustina Slides](Slides/README.md)** |
+|---|---|---|
+| <a href="Write/README.md"><img src="Write/screenshots/file-page.png" width="200"></a> | <a href="Tables/README.md"><img src="Tables/screenshots/file-page.png" width="200"></a> | <a href="Slides/README.md"><img src="Slides/screenshots/new-deck.png" width="200"></a> |
+| Word processor | Spreadsheet | Presentations |
 
 </div>
 
-## Why people use it
+- **[Rustina Write](Write/README.md) — documents.** Styles, full paragraph and page formatting,
+  tables and columns, headers and footers, lists, footnotes, comments, track changes, find and
+  replace, spell check. Long documents: navigation pane, table of contents, captions, cross
+  references, index, citations and bibliography, mail merge from CSV. Objects: pictures, shapes and
+  text boxes, WordArt, charts, equations, symbols, hyperlinks. Opens `.docx`, `.txt`, `.md`, `.html`,
+  `.rtf`, `.odt`; saves `.docx`, exports `.pdf`, `.txt`, `.html`.
+- **[Rustina Tables](Tables/README.md) — spreadsheets.** Cell styles, Excel's full number-format
+  language, conditional formatting, borders and fills, frozen panes, merged cells, the fill handle,
+  sorting and AutoFilter, data validation, outlining, Flash Fill, text to columns. A dependency-graph
+  calculation engine with dynamic arrays and **500+ worksheet functions**, plus `LET`, `LAMBDA`,
+  `MAP`, `REDUCE`, `SCAN`, `BYROW`, `BYCOL` and `MAKEARRAY`. Tables, PivotTables, 17 chart types,
+  sparklines, pictures, shapes and comments. Opens and saves `.xlsx` (styles, formulas, tables,
+  charts, PivotTables and print settings all round-trip) and `.csv`/`.tsv`; `.xls` opens with its
+  values, formulas and number formats; exports `.pdf`.
+- **[Rustina Slides](Slides/README.md) — presentations.** Slide masters and eleven layouts, eight
+  original themes, sections and notes, 150+ preset shapes, connectors, freeform, curve and scribble
+  tools, merge shapes, gradient and picture fills, in-place text editing, tables, charts, SmartArt
+  basics, audio and video. Transitions (including Morph), animations and by-paragraph builds, a
+  full-screen slide show with presenter view and a pen, rehearse timings. Opens and saves `.pptx`;
+  exports PDF (slides, notes pages, handouts), PNG/JPEG and outlines. *In alpha — the features are
+  there, expect rough edges.*
 
-- **Manage your laptop's files from your phone, anywhere, without any hassle.** If the folder you work
-  in is synced to the phone (Google Drive, OneDrive, Dropbox, Nextcloud, Syncthing, a NAS…) the apps
-  open and save straight into it through the system file manager — there is no import/export dance,
-  no "share to the app, edit, share back".
-- **All options exactly like the desktop.** The same ribbon tabs, the same dialogs, the same settings.
-  If you know Word, Excel or PowerPoint, you already know these apps.
-- **Light and fast.** A native Rust binary. It starts in a moment, scrolls at the display's frame rate
-  and is a fraction of the size of the alternatives — the whole app is a few megabytes, fonts and all.
-- **Your writing is safe.** AutoSave keeps the file up to date, and Android's Back button asks
-  *Save / Don't Save / Cancel* before a document with unsaved changes is closed — exactly like closing
-  it on a computer.
-- **Persian, Arabic and other scripts, done properly.** 22 open-licensed Persian/Arabic font families (and five metric-compatible Latin ones)
-  ship in the box, right-to-left text is laid out correctly, and any font you own can be added with
-  **Add Font…** and stays installed for good.
+More screenshots, page by page, in each app's own README —
+[Write](Write/README.md) · [Tables](Tables/README.md) · [Slides](Slides/README.md).
+
+## How it compares
+
+The alternatives are good products, with things this suite does not have — cloud collaboration and
+automatic multi-device sync above all. Rustina Office makes the opposite trade: **your file, your
+folder, your phone, no account, no connection required.**
+
+| | **Rustina Office** | Microsoft 365 mobile | Google Docs · Sheets · Slides |
+|---|---|---|---|
+| Account | **None** | Microsoft account, needed to edit | Google account |
+| Price | **Free, MIT** | Free apps with limited features; Microsoft 365 subscription for the rest | Free for personal use; Workspace subscription for business features |
+| Works offline | **Always** — the apps hold no network permission at all | Yes, once you are signed in and the file is on the phone; cloud features need a connection | Only for files you mark as available offline |
+| Ads | **None** | None | None |
+| Usage and diagnostic data | **None** | Collected (Microsoft diagnostics) | Collected (Google usage data) |
+| Download | **9–18 MB per app**, fonts included | Many times larger per app | Part of the much larger Drive/Docs apps |
+| Opens `.docx` / `.xlsx` / `.pptx` | **Yes — that is the native format** | Yes | Yes — converted to Google's own formats |
+| Where your files live | **Any folder Android's picker can see**, local or cloud | OneDrive first; local files open too | Drive first |
 
 ## Install
 
@@ -102,33 +145,6 @@ Everything below is on top of the desktop apps; the desktop layout is untouched.
   untouched.
 - **Large touch targets.** Big, tall ribbon buttons on every tab except Home (which keeps the real
   two-row layout), pill-shaped tab tokens, and a footer with the page and zoom controls.
-
-## Screenshots
-
-<table>
-  <tr>
-    <td align="center"><img src="Write/screenshots/file-page.png" width="200"><br><sub>Write — File</sub></td>
-    <td align="center"><img src="Write/screenshots/document.png" width="200"><br><sub>Write — Editing</sub></td>
-    <td align="center"><img src="Write/screenshots/new-document.png" width="200"><br><sub>Write — New</sub></td>
-    <td align="center"><img src="Write/screenshots/about.png" width="200"><br><sub>Write — About</sub></td>
-  </tr>
-  <tr>
-    <td align="center"><img src="Tables/screenshots/file-page.png" width="200"><br><sub>Tables — File</sub></td>
-    <td align="center"><img src="Tables/screenshots/grid.png" width="200"><br><sub>Tables — Editing</sub></td>
-    <td align="center"><img src="Tables/screenshots/new-workbook.png" width="200"><br><sub>Tables — New</sub></td>
-    <td align="center"><img src="Tables/screenshots/options.png" width="200"><br><sub>Tables — Options</sub></td>
-  </tr>
-  <tr>
-    <td align="center"><img src="Slides/screenshots/file-page.png" width="200"><br><sub>Slides — File</sub></td>
-    <td align="center"><img src="Slides/screenshots/slide.png" width="200"><br><sub>Slides — Editing</sub></td>
-    <td align="center"><img src="Slides/screenshots/new-deck.png" width="200"><br><sub>Slides — New</sub></td>
-    <td align="center"><img src="Slides/screenshots/presenting.png" width="200"><br><sub>Slides — Slide show</sub></td>
-  </tr>
-</table>
-
-Write's desktop build is in the same source, unchanged:
-
-<img src="Write/screenshots/desktop.png" width="640">
 
 ## Building from source
 
