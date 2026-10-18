@@ -63,6 +63,10 @@ desktop apps, laid out for a touch screen. Nothing is a stripped-down "mobile ed
 
 ## Install
 
+**This is the first release.** The three apps are new, so if you hit a bug anywhere, please
+[open an issue](https://github.com/RustinaCo/Office/issues) — with what you did, your phone model and
+your Android version — and it gets fixed quickly.
+
 1. Download the APK you want from the [**v1.0.2 release**](https://github.com/RustinaCo/Office/releases/tag/v1.0.2)
    or from [`apk/`](apk) at that tag: **`Rustina-Write-1.0.2.apk`** (documents),
    **`Rustina-Tables-1.0.2.apk`** (spreadsheets), **`Rustina-Slides-1.0.2.apk`** (presentations).
