@@ -1539,55 +1539,43 @@ pub fn paint_theme_tile(p: &egui::Painter, r: Rect, th: &deckcraft_model::Theme)
     let fg = theme::to_color32(th.colors.get(deckcraft_color::SchemeSlot::Dk1));
     let accents: Vec<Color32> = th.colors.colors.iter().skip(4).take(6).copied().map(theme::to_color32).collect();
     let acc = |k: usize| accents.get(k % accents.len().max(1)).copied().unwrap_or(fg);
-    let soft = fg.lerp_to_gamma(bg, 0.5);
+    let soft = fg.lerp_to_gamma(bg, 0.62);
+    // What the tile shows is what the deck is: the title slide, and the "Title and Content" layout
+    // every slide after it is built from, both painted in this theme's own colours. The tile used to
+    // draw decorative bars picked by a hash of the theme name, so the preview promised a design the
+    // slides never had.
     p.rect(r, CornerRadius::same(2), bg, Stroke::new(1.0, Color32::from_gray(200)), egui::StrokeKind::Inside);
-    let a = r.shrink(5.0);
-    let (w, h) = (a.width(), a.height());
-    let bar = |x: f32, y: f32, bw: f32, bh: f32, col: Color32| {
-        p.rect_filled(Rect::from_min_size(pos2(a.min.x + x, a.min.y + y), vec2(bw, bh)), CornerRadius::ZERO, col);
+    let a = r.shrink(4.0);
+    let gap = (a.width() * 0.025).max(2.0);
+    let sw = ((a.width() - gap) / 2.0).max(1.0);
+    let slide = |x: f32, title_slide: bool| {
+        let s = Rect::from_min_size(pos2(a.min.x + x, a.min.y), vec2(sw, a.height()));
+        p.rect_filled(s, CornerRadius::same(1), bg);
+        p.rect_stroke(s, CornerRadius::same(1), Stroke::new(0.7, soft), egui::StrokeKind::Inside);
+        let bar = |bx: f32, by: f32, bw: f32, bh: f32, col: Color32| {
+            p.rect_filled(
+                Rect::from_min_size(
+                    pos2(s.min.x + s.width() * bx, s.min.y + s.height() * by),
+                    vec2(s.width() * bw, s.height() * bh),
+                ),
+                CornerRadius::ZERO,
+                col,
+            );
+        };
+        if title_slide {
+            bar(0.12, 0.33, 0.76, 0.16, fg);
+            bar(0.12, 0.54, 0.46, 0.08, soft);
+            bar(0.12, 0.70, 0.28, 0.05, acc(0));
+        } else {
+            bar(0.09, 0.10, 0.60, 0.13, fg);
+            bar(0.09, 0.27, 0.26, 0.045, acc(0));
+            bar(0.09, 0.41, 0.82, 0.06, soft);
+            bar(0.09, 0.54, 0.74, 0.06, soft);
+            bar(0.09, 0.67, 0.52, 0.06, soft);
+        }
     };
-    let seed: u32 = th.name.bytes().fold(7u32, |s, b| s.wrapping_mul(31).wrapping_add(b as u32));
-    match seed % 5 {
-        // Title at the top, a full-width colour band across the foot.
-        0 => {
-            bar(0.0, h * 0.08, w * 0.74, h * 0.17, fg);
-            bar(0.0, h * 0.33, w * 0.50, h * 0.10, soft);
-            bar(0.0, h * 0.62, w * 0.30, h * 0.06, acc(2));
-            bar(0.0, h * 0.76, w, h * 0.24, acc(0));
-        }
-        // A colour rail down the left, the title beside it.
-        1 => {
-            bar(0.0, 0.0, w * 0.24, h, acc(0));
-            bar(w * 0.33, h * 0.16, w * 0.62, h * 0.18, fg);
-            bar(w * 0.33, h * 0.42, w * 0.48, h * 0.10, soft);
-            bar(w * 0.33, h * 0.68, w * 0.20, h * 0.07, acc(1));
-        }
-        // An accent panel with the title knocked out of it.
-        2 => {
-            bar(0.0, 0.0, w, h * 0.12, acc(3));
-            bar(w * 0.14, h * 0.25, w * 0.72, h * 0.46, acc(0));
-            bar(w * 0.24, h * 0.37, w * 0.50, h * 0.11, bg);
-            bar(w * 0.24, h * 0.55, w * 0.34, h * 0.07, bg);
-            bar(0.0, h * 0.86, w * 0.20, h * 0.14, acc(1));
-            bar(w * 0.80, h * 0.86, w * 0.20, h * 0.14, acc(2));
-        }
-        // Title top-left with a colour block swept into the corner.
-        3 => {
-            bar(0.0, h * 0.12, w * 0.66, h * 0.19, fg);
-            bar(0.0, h * 0.38, w * 0.42, h * 0.09, soft);
-            bar(0.0, h * 0.55, w * 0.26, h * 0.06, acc(2));
-            bar(w * 0.52, h * 0.60, w * 0.48, h * 0.40, acc(0));
-            bar(w * 0.52, h * 0.50, w * 0.26, h * 0.07, acc(1));
-        }
-        // A row of colour strips under the title.
-        _ => {
-            bar(0.0, h * 0.14, w * 0.62, h * 0.19, fg);
-            bar(0.0, h * 0.40, w * 0.38, h * 0.09, soft);
-            for k in 0..4 {
-                bar(k as f32 * w * 0.25, h * 0.62, w * 0.235, h * 0.38, acc(k));
-            }
-        }
-    }
+    slide(0.0, true);
+    slide(sw + gap, false);
 }
 
 // ---------- Transitions ----------

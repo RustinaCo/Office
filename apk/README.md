@@ -20,7 +20,7 @@ SHA-256 of each file at this tag, if you want to check what you downloaded:
 ```
 31f006252a6d71f10f1f500c1a28f3969da5ed472382f428d7280719531a70bb  Rustina-Write-1.0.2.apk
 185a34eda7da61f1c65a5ce44cd5c3defe342129f09fdb52e9ecebcced42ca3c  Rustina-Tables-1.0.2.apk
-3f3ca370f34f11af69373e986df99171d1678a4147709af41a1fd792064f3aae  Rustina-Slides-1.0.2.apk
+f705b46ad074a7baa026838b748990e14942d2d13e71335ff7ee749e914d0a03  Rustina-Slides-1.0.2.apk
 ```
 
 **1.0.2** gives the three apps their own artwork and renames one of them: every app now ships a
@@ -28,7 +28,7 @@ launcher icon in its own colour with its initial — Write blue, Tables green, S
 sharp-cornered square with a soft gradient, a matching Android 8+ adaptive icon, and the same mark on
 the launch splash. No Office artwork anywhere. **Rustina Gride is now Rustina Tables** (same package,
 so it installs as an update over the old one). Write and Slides also got the size-optimised release
-profile, so their APKs are smaller.
+profile, so their APKs are smaller. In Slides the theme tiles now show the theme's real slides — the title slide and a content slide — instead of a decorative drawing, so the preview matches what you get.
 
 **1.0.1** rebuilds all three on the phone File screen: every app now opens on the same list of
 destinations (Home, New, Open, Info, Save, Save As, Print, Export, About, Options), **About** is a
