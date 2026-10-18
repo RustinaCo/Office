@@ -31,7 +31,7 @@ touch screen. It opens and saves PowerPoint `.pptx` files and presents them full
   </tr>
 </table>
 
-**Download:** [`apk/Rustina-Slides-1.0.1.apk`](../apk/Rustina-Slides-1.0.1.apk) — Android 10 (API 29) or
+**Download:** [`apk/Rustina-Slides-1.0.2.apk`](../apk/Rustina-Slides-1.0.2.apk) — Android 10 (API 29) or
 newer, arm64. Or build it yourself ([below](#building)).
 
 ## What it does

@@ -5,12 +5,12 @@
 **Microsoft Office, on your phone — the same three apps, the same ribbon, the same options as the
 desktop, rebuilt lightweight for Android.**
 
-[English](README.md) · [فارسی](README.fa.md) · [Write](Write/README.md) · [Gride](Gride/README.md) · [Slides](Slides/README.md)
+[English](README.md) · [فارسی](README.fa.md) · [Write](Write/README.md) · [Tables](Tables/README.md) · [Slides](Slides/README.md)
 
 ![Platform: Android 10+](https://img.shields.io/badge/Android-10%2B%20(arm64)-3ddc84?style=flat-square&logo=android&logoColor=white)
 ![Written in Rust](https://img.shields.io/badge/written%20in-Rust-b7410e?style=flat-square&logo=rust&logoColor=white)
 ![License: MIT](https://img.shields.io/badge/license-MIT-blue?style=flat-square)
-![Version 1.0.1](https://img.shields.io/badge/version-1.0.1-2b47b5?style=flat-square)
+![Version 1.0.2](https://img.shields.io/badge/version-1.0.2-2b47b5?style=flat-square)
 
 </div>
 
@@ -25,7 +25,7 @@ work you already have opens here:
 | App | What it is | Open | Save |
 |---|---|---|---|
 | **[Rustina Write](Write/README.md)** | A word processor — documents, styles, tables, track changes, references, mail merge | `.docx`, `.txt`, `.md`, `.html`, `.rtf`, `.odt` | `.docx`, `.pdf`, `.txt`, `.html` |
-| **[Rustina Gride](Gride/README.md)** | A spreadsheet — formulas, formatting, tables, charts, data tools | `.xlsx`, `.csv` | `.xlsx`, `.csv`, `.pdf` |
+| **[Rustina Tables](Tables/README.md)** | A spreadsheet — formulas, formatting, tables, charts, data tools | `.xlsx`, `.csv` | `.xlsx`, `.csv`, `.pdf` |
 | **[Rustina Slides](Slides/README.md)** | Presentations — themes, layouts, shapes, pictures, charts, transitions, animations, slide shows | `.pptx` | `.pptx`, `.pdf` |
 
 The whole suite is written in **Rust** — one engine, one UI, three apps — and the Android build reuses
@@ -37,8 +37,8 @@ desktop apps, laid out for a touch screen. Nothing is a stripped-down "mobile ed
 | **Write** — File page | Document | New document | Options |
 |---|---|---|---|
 | <img src="Write/screenshots/file-page.png" width="190"> | <img src="Write/screenshots/document.png" width="190"> | <img src="Write/screenshots/new-document.png" width="190"> | <img src="Write/screenshots/options.png" width="190"> |
-| **Gride** — File page | Sheet | New workbook | Options |
-| <img src="Gride/screenshots/file-page.png" width="190"> | <img src="Gride/screenshots/grid.png" width="190"> | <img src="Gride/screenshots/new-workbook.png" width="190"> | <img src="Gride/screenshots/options.png" width="190"> |
+| **Tables** — File page | Sheet | New workbook | Options |
+| <img src="Tables/screenshots/file-page.png" width="190"> | <img src="Tables/screenshots/grid.png" width="190"> | <img src="Tables/screenshots/new-workbook.png" width="190"> | <img src="Tables/screenshots/options.png" width="190"> |
 | **Slides** — File page | Slide | New presentation | Slide show |
 | <img src="Slides/screenshots/file-page.png" width="190"> | <img src="Slides/screenshots/slide.png" width="190"> | <img src="Slides/screenshots/new-deck.png" width="190"> | <img src="Slides/screenshots/presenting.png" width="190"> |
 
@@ -63,9 +63,9 @@ desktop apps, laid out for a touch screen. Nothing is a stripped-down "mobile ed
 
 ## Install
 
-1. Download the APK you want from the [**v1.0.1 release**](https://github.com/RustinaCo/Office/releases/tag/v1.0.1)
-   or from [`apk/`](apk) at that tag: **`Rustina-Write-1.0.1.apk`** (documents),
-   **`Rustina-Gride-1.0.1.apk`** (spreadsheets), **`Rustina-Slides-1.0.1.apk`** (presentations).
+1. Download the APK you want from the [**v1.0.2 release**](https://github.com/RustinaCo/Office/releases/tag/v1.0.2)
+   or from [`apk/`](apk) at that tag: **`Rustina-Write-1.0.2.apk`** (documents),
+   **`Rustina-Tables-1.0.2.apk`** (spreadsheets), **`Rustina-Slides-1.0.2.apk`** (presentations).
 2. Open it on the phone and allow installing from this source when Android asks.
 3. That's it — no account, no ads, no telemetry, no network permission.
 
@@ -104,10 +104,10 @@ Everything below is on top of the desktop apps; the desktop layout is untouched.
     <td align="center"><img src="Write/screenshots/about.png" width="200"><br><sub>Write — About</sub></td>
   </tr>
   <tr>
-    <td align="center"><img src="Gride/screenshots/file-page.png" width="200"><br><sub>Gride — File</sub></td>
-    <td align="center"><img src="Gride/screenshots/grid.png" width="200"><br><sub>Gride — Editing</sub></td>
-    <td align="center"><img src="Gride/screenshots/new-workbook.png" width="200"><br><sub>Gride — New</sub></td>
-    <td align="center"><img src="Gride/screenshots/options.png" width="200"><br><sub>Gride — Options</sub></td>
+    <td align="center"><img src="Tables/screenshots/file-page.png" width="200"><br><sub>Tables — File</sub></td>
+    <td align="center"><img src="Tables/screenshots/grid.png" width="200"><br><sub>Tables — Editing</sub></td>
+    <td align="center"><img src="Tables/screenshots/new-workbook.png" width="200"><br><sub>Tables — New</sub></td>
+    <td align="center"><img src="Tables/screenshots/options.png" width="200"><br><sub>Tables — Options</sub></td>
   </tr>
   <tr>
     <td align="center"><img src="Slides/screenshots/file-page.png" width="200"><br><sub>Slides — File</sub></td>

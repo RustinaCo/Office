@@ -44,14 +44,7 @@ pub fn splash(ui: &mut egui::Ui) -> bool {
     let r = ui.max_rect();
     ui.painter().rect_filled(r, 0.0, BRAND_BG);
     let c = r.center() + vec2(0.0, -40.0);
-    ui.painter().circle_filled(c, 64.0, Color32::WHITE);
-    ui.painter().text(
-        c,
-        Align2::CENTER_CENTER,
-        "S",
-        egui::FontId::new(56.0, egui::FontFamily::Proportional),
-        BRAND_BG,
-    );
+    brand_mark(ui.painter(), egui::Rect::from_center_size(c, vec2(132.0, 132.0)));
     ui.painter().text(
         c + vec2(0.0, 96.0),
         Align2::CENTER_CENTER,
@@ -149,4 +142,23 @@ pub fn show_start(app: &mut SlideApp, ui: &mut Ui) {
             ui.add_space(24.0);
         });
     });
+}
+
+/// The Rustina Slides mark: a screen with a play triangle and a stand. Ours, drawn in code — shared
+/// by the launch splash, the launcher icon and About.
+/// The Rustina Slides mark: the app's colour square with its initial, exactly like the launcher
+/// icon. Ours, drawn in code (shared by the launch splash and About).
+/// The Rustina Slides mark: the app's colour square with its initial, exactly like the launcher
+/// icon. Ours, drawn in code (shared by the launch splash and About).
+fn brand_mark(p: &egui::Painter, r: egui::Rect) {
+    let tinted = Color32::from_rgb(0xCD, 0x5D, 0x40);
+    let letter = Color32::from_rgb(0xFF, 0xFF, 0xFF);
+    p.rect_filled(r, egui::CornerRadius::ZERO, tinted);
+    p.text(
+        r.center(),
+        Align2::CENTER_CENTER,
+        "S",
+        egui::FontId::new(r.width() * 0.62, egui::FontFamily::Proportional),
+        letter,
+    );
 }

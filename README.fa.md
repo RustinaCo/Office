@@ -5,7 +5,7 @@
 **مایکروسافت آفیس، روی گوشی‌ات — همان سه برنامه، همان ریبون و همان تنظیمات نسخه کامپیوتری، سبک و
 سریع برای اندروید.**
 
-[English](README.md) · [فارسی](README.fa.md) · [Write](Write/README.md) · [Gride](Gride/README.md) · [Slides](Slides/README.md)
+[English](README.md) · [فارسی](README.fa.md) · [Write](Write/README.md) · [Tables](Tables/README.md) · [Slides](Slides/README.md)
 
 </div>
 
@@ -20,7 +20,7 @@
 | برنامه | چیست | باز کردن | ذخیره |
 |---|---|---|---|
 | **[Rustina Write](Write/README.md)** | واژه‌پرداز — سند، استایل، جدول، رد تغییرات، ارجاع‌ها، ادغام پستی | `.docx`، `.txt`، `.md`، `.html`، `.rtf`، `.odt` | `.docx`، `.pdf`، `.txt`، `.html` |
-| **[Rustina Gride](Gride/README.md)** | صفحه‌گسترده — فرمول، قالب‌بندی، جدول، نمودار، ابزارهای داده | `.xlsx`، `.csv` | `.xlsx`، `.csv`، `.pdf` |
+| **[Rustina Tables](Tables/README.md)** | صفحه‌گسترده — فرمول، قالب‌بندی، جدول، نمودار، ابزارهای داده | `.xlsx`، `.csv` | `.xlsx`، `.csv`، `.pdf` |
 | **[Rustina Slides](Slides/README.md)** | ارائه — تم، طرح‌بندی، شکل، تصویر، نمودار، انتقال، انیمیشن، نمایش اسلاید | `.pptx` | `.pptx`، `.pdf` |
 
 کل مجموعه با **Rust** نوشته شده — یک موتور، یک رابط کاربری، سه برنامه — و نسخه اندروید دقیقاً همان
@@ -32,8 +32,8 @@
 | **Write** — صفحهٔ فایل | سند | سند جدید | تنظیمات |
 |---|---|---|---|
 | <img src="Write/screenshots/file-page.png" width="190"> | <img src="Write/screenshots/document.png" width="190"> | <img src="Write/screenshots/new-document.png" width="190"> | <img src="Write/screenshots/options.png" width="190"> |
-| **Gride** — صفحهٔ فایل | صفحه‌گسترده | کارپوشهٔ جدید | تنظیمات |
-| <img src="Gride/screenshots/file-page.png" width="190"> | <img src="Gride/screenshots/grid.png" width="190"> | <img src="Gride/screenshots/new-workbook.png" width="190"> | <img src="Gride/screenshots/options.png" width="190"> |
+| **Tables** — صفحهٔ فایل | صفحه‌گسترده | کارپوشهٔ جدید | تنظیمات |
+| <img src="Tables/screenshots/file-page.png" width="190"> | <img src="Tables/screenshots/grid.png" width="190"> | <img src="Tables/screenshots/new-workbook.png" width="190"> | <img src="Tables/screenshots/options.png" width="190"> |
 | **Slides** — صفحهٔ فایل | اسلاید | ارائهٔ جدید | نمایش اسلاید |
 | <img src="Slides/screenshots/file-page.png" width="190"> | <img src="Slides/screenshots/slide.png" width="190"> | <img src="Slides/screenshots/new-deck.png" width="190"> | <img src="Slides/screenshots/presenting.png" width="190"> |
 
@@ -57,7 +57,7 @@
 
 ## نصب
 
-۱. APK مورد نظر را از [**ریلیز v1.0.1**](https://github.com/RustinaCo/Office/releases/tag/v1.0.1) دانلود کن.
+۱. APK مورد نظر را از [**ریلیز v1.0.2**](https://github.com/RustinaCo/Office/releases/tag/v1.0.2) دانلود کن.
 
 ۲. روی گوشی بازش کن و وقتی اندروید اجازه خواست، نصب از این منبع را تأیید کن.
 

@@ -11,7 +11,7 @@ from the **ArtCraft team**'s clean-room, open-source work:
 | Upstream | What it is | This repository's app |
 |---|---|---|
 | [WordCraft](https://github.com/storytold/wordcraft) | Word-style word processor, pure Rust | [Rustina Write](Write/README.md) |
-| [GridCraft](https://github.com/storytold/gridcraft) | Excel-style spreadsheet, pure Rust | [Rustina Gride](Gride/README.md) |
+| [GridCraft](https://github.com/storytold/gridcraft) | Excel-style spreadsheet, pure Rust | [Rustina Tables](Tables/README.md) |
 | [DeckCraft](https://github.com/storytold/deckcraft) | PowerPoint-style presentations, pure Rust | [Rustina Slides](Slides/README.md) |
 
 Website: **https://getartcraft.com/** — thank you. Their licence is **MIT OR Apache-2.0**, and both

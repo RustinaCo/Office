@@ -27,7 +27,7 @@ opens and saves the file formats you already have.
   </tr>
 </table>
 
-**Download:** [`apk/Rustina-Write-1.0.1.apk`](../apk/Rustina-Write-1.0.1.apk) — Android 10 (API 29) or
+**Download:** [`apk/Rustina-Write-1.0.2.apk`](../apk/Rustina-Write-1.0.2.apk) — Android 10 (API 29) or
 newer, arm64. Or build it yourself ([below](#building)).
 
 ## What it does
