@@ -6,9 +6,9 @@ asks (and turning off "install via USB" restrictions if your phone has them).
 
 | File | App | What it opens | Size |
 |---|---|---|---|
-| [`Rustina-Write-1.0.2.apk`](Rustina-Write-1.0.2.apk) | Rustina Write | `.docx`, `.txt`, `.md`, `.html`, `.rtf`, `.odt` | 18.3 MB |
-| [`Rustina-Tables-1.0.2.apk`](Rustina-Tables-1.0.2.apk) | Rustina Tables | `.xlsx`, `.csv` | 9.3 MB |
-| [`Rustina-Slides-1.0.2.apk`](Rustina-Slides-1.0.2.apk) | Rustina Slides | `.pptx` | 12.8 MB |
+| [`Rustina-Write-1.0.2.apk`](https://github.com/RustinaCo/Office/raw/v1.0.2/apk/Rustina-Write-1.0.2.apk) | Rustina Write | `.docx`, `.txt`, `.md`, `.html`, `.rtf`, `.odt` | 18.3 MB |
+| [`Rustina-Tables-1.0.2.apk`](https://github.com/RustinaCo/Office/raw/v1.0.2/apk/Rustina-Tables-1.0.2.apk) | Rustina Tables | `.xlsx`, `.csv` | 9.3 MB |
+| [`Rustina-Slides-1.0.2.apk`](https://github.com/RustinaCo/Office/raw/v1.0.2/apk/Rustina-Slides-1.0.2.apk) | Rustina Slides | `.pptx` | 12.8 MB |
 
 These are built from the sources in this same tag — `Write/`, `Tables/` and `Slides/` — with
 `cargo apk2 build --lib --release` (each app folder's README has the exact commands). They are signed
