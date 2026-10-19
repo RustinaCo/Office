@@ -1,0 +1,38 @@
+# Font manifest for Rustina Draw: the same 27 open-licensed families the other Rustina apps ship
+Almarai | Bold | fonts/Almarai-Bold.ttf | Arab,Latn
+Almarai | Regular | fonts/Almarai-Regular.ttf | Arab,Latn
+Amiri | Bold | fonts/Amiri-Bold.ttf | Arab,Latn
+Amiri | Regular | fonts/Amiri-Regular.ttf | Arab,Latn
+Aref Ruqaa | Bold | fonts/ArefRuqaa-Bold.ttf | Arab,Latn
+Aref Ruqaa | Regular | fonts/ArefRuqaa-Regular.ttf | Arab,Latn
+Arimo | Regular | fonts/Arimo-Regular.ttf | Latn
+Cairo | Regular | fonts/Cairo-Regular.ttf | Arab,Latn
+Caladea | Regular | fonts/Caladea-Regular.ttf | Latn
+Carlito | Bold | fonts/Carlito-Bold.ttf | Latn
+Carlito | Regular | fonts/Carlito-Regular.ttf | Latn
+Cousine | Regular | fonts/Cousine-Regular.ttf | Latn
+Estedad | Bold | fonts/Estedad-Bold.ttf | Arab,Latn
+Estedad | Regular | fonts/Estedad-Regular.ttf | Arab,Latn
+Gandom | Regular | fonts/Gandom-Regular.ttf | Arab,Latn
+Katibeh | Regular | fonts/Katibeh-Regular.ttf | Arab,Latn
+Lalezar | Regular | fonts/Lalezar-Regular.ttf | Arab,Latn
+Markazi TextMarkazi TextMarkazi TextMarkazi TextMarkazi Text | Regular | fonts/MarkaziText-Regular.ttf | Arab,Latn
+Mirza | Regular | fonts/Mirza-Regular.ttf | Arab,Latn
+Nahid | Regular | fonts/Nahid-Regular.ttf | Arab,Latn
+Noto Naskh Arabic | Regular | fonts/NotoNaskhArabic-Regular.ttf | Arab,Latn
+Noto Nastaliq UrduNoto Nastaliq UrduNoto Nastaliq UrduNoto Nastaliq UrduNoto Nastaliq Urdu | Regular | fonts/NotoNastaliqUrdu-Regular.ttf | Arab,Latn
+Noto Sans Arabic | Regular | fonts/NotoSansArabic-Regular.ttf | Arab,Latn
+Parastoo | Bold | fonts/Parastoo-Bold.ttf | Arab,Latn
+Parastoo | Regular | fonts/Parastoo-Regular.ttf | Arab,Latn
+Sahel | Bold | fonts/Sahel-Bold.ttf | Arab,Latn
+Sahel | Regular | fonts/Sahel-Regular.ttf | Arab,Latn
+Samim | Bold | fonts/Samim-Bold.ttf | Arab,Latn
+Samim | Regular | fonts/Samim-Regular.ttf | Arab,Latn
+Scheherazade New | Regular | fonts/ScheherazadeNew-Regular.ttf | Arab,Latn
+Shabnam | Bold | fonts/Shabnam-Bold.ttf | Arab,Latn
+Shabnam | Regular | fonts/Shabnam-Regular.ttf | Arab,Latn
+Tajawal | Regular | fonts/Tajawal-Regular.ttf | Arab,Latn
+Tanha | Regular | fonts/Tanha-Regular.ttf | Arab,Latn
+Tinos | Regular | fonts/Tinos-Regular.ttf | Latn
+Vazirmatn | Bold | fonts/Vazirmatn-Bold.ttf | Arab,Latn
+Vazirmatn | Regular | fonts/Vazirmatn-Regular.ttf | Arab,Latn

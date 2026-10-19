@@ -2,22 +2,23 @@
 
 # رستینا آفیس
 
-**مایکروسافت آفیس، روی گوشی‌ات — همان سه برنامه، همان ریبون و همان تنظیمات نسخه کامپیوتری، سبک و
+**آفیس و CAD، روی گوشی‌ات — همان برنامه‌ها، همان منوها و همان تنظیمات نسخه کامپیوتری، سبک و
 سریع برای اندروید.**
 
-[English](README.md) · [فارسی](README.fa.md) · [Write](Write/README.md) · [Tables](Tables/README.md) · [Slides](Slides/README.md)
+[English](README.md) · [فارسی](README.fa.md) · [Write](Write/README.md) · [Tables](Tables/README.md) · [Slides](Slides/README.md) · [Draw](Draw/README.md)
 
 ![Platform: Android 10+](https://img.shields.io/badge/Android-10%2B%20(arm64)-3ddc84?style=flat-square&logo=android&logoColor=white)
 ![Written in Rust](https://img.shields.io/badge/written%20in-Rust-b7410e?style=flat-square&logo=rust&logoColor=white)
 ![License: MIT](https://img.shields.io/badge/license-MIT-blue?style=flat-square)
-![Version 1.0.2](https://img.shields.io/badge/version-1.0.2-2b47b5?style=flat-square)
+![Version 1.0.3](https://img.shields.io/badge/version-1.0.3-2b47b5?style=flat-square)
 ![No account](https://img.shields.io/badge/account-none-2ea44f?style=flat-square)
 ![No network permission](https://img.shields.io/badge/network%20permission-none-2ea44f?style=flat-square)
 
 **دانلود — لینک‌های مستقیم APK:**
-[**Rustina Write** — ۱۸.۳ مگابایت](https://github.com/RustinaCo/Office/raw/v1.0.2/apk/Rustina-Write-1.0.2.apk) ·
-[**Rustina Tables** — ۹.۴ مگابایت](https://github.com/RustinaCo/Office/raw/v1.0.2/apk/Rustina-Tables-1.0.2.apk) ·
-[**Rustina Slides** — ۱۲.۸ مگابایت](https://github.com/RustinaCo/Office/raw/v1.0.2/apk/Rustina-Slides-1.0.2.apk)
+[**Rustina Write** — ۱۸.۳ مگابایت](https://github.com/RustinaCo/Office/raw/v1.0.3/apk/Rustina-Write-1.0.2.apk) ·
+[**Rustina Tables** — ۹.۴ مگابایت](https://github.com/RustinaCo/Office/raw/v1.0.3/apk/Rustina-Tables-1.0.2.apk) ·
+[**Rustina Slides** — ۱۲.۸ مگابایت](https://github.com/RustinaCo/Office/raw/v1.0.3/apk/Rustina-Slides-1.0.2.apk) ·
+[**Rustina Draw** — ۱۳.۶ مگابایت](https://github.com/RustinaCo/Office/raw/v1.0.3/apk/Rustina-Draw-0.9.0.apk)
 
 </div>
 
@@ -30,7 +31,7 @@
 - **هیچ حساب کاربری‌ای لازم نیست.** نه ثبت‌نام، نه ورود — بین تو و فایلت هیچ صفحهٔ لاگینی نیست.
 - **بدون تبلیغ، بدون تله‌متری و بدون هیچ دسترسی به شبکه.** اندروید اجازه نمی‌دهد این برنامه‌ها به
   جایی وصل شوند، چون حتی درخواست مجوز شبکه هم نکرده‌اند.
-- **سبک.** ۱۸.۳ و ۹.۴ و ۱۲.۸ مگابایت برای هر برنامه، با فونت‌ها — کسری از حجم مجموعه‌های
+- **سبک.** ۱۸.۳ و ۹.۴ و ۱۲.۸ مگابایت برای سه اپ آفیس و ۱۳.۶ مگابایت برای Draw، با فونت‌ها — کسری از حجم مجموعه‌های
   پرحجم و پرطرفدار.
 - **فایل‌های واقعی را باز می‌کند.** `.docx` و `.xlsx` و `.pptx` و هم‌خانواده‌هایشان باز می‌شوند،
   ویرایش می‌شوند و در همان قالب ذخیره می‌شوند؛ کاری که روی کامپیوتر داری، همین‌جا باز می‌شود.
@@ -52,11 +53,11 @@
   دسکتاپ (لینوکس، مک، ویندوز، BSD) و نسخهٔ وب را هم می‌سازد.
 - **اندروید ۱۰ (API 29) یا جدیدتر، arm64-v8a** — نصب دستی، بدون نیاز به حساب گوگل‌پلی.
 
-## سه برنامه
+## برنامه‌ها
 
-یک موتور، یک رابط کاربری، سه برنامه. نسخهٔ اندروید دقیقاً همان رابط نسخهٔ کامپیوتری را استفاده
-می‌کند — ریبون، تب‌ها، پنجره‌ها و همهٔ تنظیمات — چیده‌شده برای صفحهٔ لمسی. هیچ‌چیز اینجا نسخهٔ
-کم‌وبیش «موبایلی» نیست.
+سه اپ آفیس روی یک موتور و یک رابط، به‌اضافهٔ یک صندلی CAD روی موتور چهارم. نسخهٔ اندروید هر کدام
+دقیقاً همان رابط نسخهٔ کامپیوتری را استفاده می‌کند — ریبون یا منوها، تب‌ها، پنجره‌ها و همهٔ تنظیمات —
+چیده‌شده برای صفحهٔ لمسی. هیچ‌چیز اینجا نسخهٔ کم‌وبیش «موبایلی» نیست.
 
 <div align="center">
 
@@ -86,6 +87,9 @@
   انتقال‌ها (از جمله Morph)، انیمیشن‌ها و ساخت مرحله‌ای، نمایش تمام‌صفحه با presenter view و قلم،
   تمرین زمان‌بندی. `pptx` را باز و ذخیره می‌کند؛ `pdf` (اسلاید، صفحهٔ یادداشت، جزوه)، PNG/JPEG و
   outline می‌سازد. *در مرحلهٔ آلفا — امکانات هست، ولی انتظار لبه‌های ناهموار داشته باش.*
+- **[Rustina Draw](Draw/README.md) — نقشه‌کشی.** CADCraft تیم ArtCraft: نقشه‌کشی دوبعدی با خط
+  فرمان، اسنپ‌های شیء، لایه‌ها، اندازه‌گذاری، هاشور، بلوک و فایل‌های DXF/DWG، در اندازهٔ گوشی.
+  *پیش‌نمایش پیش‌آلفا — README خودش دقیقاً می‌گوید چه چیزی هست و چه چیزی هنوز نیست.*
 
 اسکرین‌شات‌های بیشتر، صفحه به صفحه، داخل README خودِ هر برنامه —
 [Write](Write/README.md) · [Tables](Tables/README.md) · [Slides](Slides/README.md).
@@ -115,12 +119,14 @@
 
 ۱. APK مورد نظر را دانلود کن — این لینک‌ها مستقیم خود فایل را می‌دهند و نیازی به صفحهٔ ریلیز نیست:
    - **Rustina Write** (اسناد، ۱۸.۳ مگابایت) —
-     [Rustina-Write-1.0.2.apk](https://github.com/RustinaCo/Office/raw/v1.0.2/apk/Rustina-Write-1.0.2.apk)
+     [Rustina-Write-1.0.2.apk](https://github.com/RustinaCo/Office/raw/v1.0.3/apk/Rustina-Write-1.0.2.apk)
    - **Rustina Tables** (صفحه‌گسترده، ۹.۴ مگابایت) —
-     [Rustina-Tables-1.0.2.apk](https://github.com/RustinaCo/Office/raw/v1.0.2/apk/Rustina-Tables-1.0.2.apk)
+     [Rustina-Tables-1.0.2.apk](https://github.com/RustinaCo/Office/raw/v1.0.3/apk/Rustina-Tables-1.0.2.apk)
    - **Rustina Slides** (ارائه، ۱۲.۸ مگابایت) —
-     [Rustina-Slides-1.0.2.apk](https://github.com/RustinaCo/Office/raw/v1.0.2/apk/Rustina-Slides-1.0.2.apk)
-   (هر سه در همین تگ در [`apk/`](apk) هم هستند، همراه با SHA-256.)
+     [Rustina-Slides-1.0.2.apk](https://github.com/RustinaCo/Office/raw/v1.0.3/apk/Rustina-Slides-1.0.2.apk)
+   - **Rustina Draw** (نقشه‌کشی، ۱۳.۶ مگابایت) —
+     [Rustina-Draw-0.9.0.apk](https://github.com/RustinaCo/Office/raw/v1.0.3/apk/Rustina-Draw-0.9.0.apk)
+   (هر چهار در همین تگ در [`apk/`](apk) هم هستند، همراه با SHA-256.)
 
 ۲. روی گوشی بازش کن و وقتی اندروید اجازه خواست، نصب از این منبع را تأیید کن.
 

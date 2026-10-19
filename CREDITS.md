@@ -6,7 +6,7 @@ says exactly who did what, and under which licence.
 ## The ArtCraft team — the upstream apps
 
 **Thank you.** The ArtCraft team published their engine and interface openly, and that single
-decision is the reason Rustina Office exists at all; these three apps are a rebuild of their work for
+decision is the reason Rustina Office exists at all; these four apps are a rebuild of their work for
 the phone, and everything good about them starts there.
 
 The document, spreadsheet and presentation engines, the ribbon and the whole desktop interface come
@@ -17,6 +17,7 @@ from the **ArtCraft team**'s clean-room, open-source work:
 | [WordCraft](https://github.com/storytold/wordcraft) | Word-style word processor, pure Rust | [Rustina Write](Write/README.md) |
 | [GridCraft](https://github.com/storytold/gridcraft) | Excel-style spreadsheet, pure Rust | [Rustina Tables](Tables/README.md) |
 | [DeckCraft](https://github.com/storytold/deckcraft) | PowerPoint-style presentations, pure Rust | [Rustina Slides](Slides/README.md) |
+| [CADCraft](https://github.com/storytold/cadcraft) | AutoCAD-style 2D drafting, pure Rust | [Rustina Draw](Draw/README.md) |
 
 Website: **https://getartcraft.com/** — thank you. Their licence is **MIT OR Apache-2.0**, and both
 texts are kept with the source in each app folder (`LICENSE-MIT`, `LICENSE-APACHE`), together with
@@ -32,11 +33,13 @@ What this repository adds on top:
   **working AutoSave** on Android, and the keyboard that stays where you put it;
 - **22 open-licensed Persian/Arabic font families** plus the *Add Font…* path that keeps a font you
   installed inside the app;
+- the **Android shell for Draw**: the real keyboard over the command line, the system file picker
+  both ways, safe areas, and the CPU canvas;
 - **Rustina Slides**' original template gallery.
 
 ## Rustina Office
 
-The suite itself — the three Android apps, the phone work listed above, the Rustina names, the
+The suite itself — the four Android apps, the phone work listed above, the Rustina names, the
 packaging and these pages — is by **Sina Khanzadeh** ([@programmer-1998](https://github.com/programmer-1998),
 `sina-khanzadeh.ir`), released under the MIT licence in [`LICENSE`](LICENSE).
 

@@ -34,7 +34,7 @@ The **New presentation** gallery is shown in the [Rustina Office README](../READ
 
 **First release** — hit a bug? [Open an issue](https://github.com/RustinaCo/Office/issues) with what you did, your phone model and your Android version, and it gets fixed quickly.
 
-**Download:** [`apk/Rustina-Slides-1.0.2.apk`](https://github.com/RustinaCo/Office/raw/v1.0.2/apk/Rustina-Slides-1.0.2.apk) — Android 10 (API 29) or
+**Download:** [`apk/Rustina-Slides-1.0.2.apk`](https://github.com/RustinaCo/Office/raw/v1.0.3/apk/Rustina-Slides-1.0.2.apk) — Android 10 (API 29) or
 newer, arm64. Or build it yourself ([below](#building)).
 
 ## What it does

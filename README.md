@@ -2,22 +2,23 @@
 
 # Rustina Office
 
-**Microsoft Office, on your phone — the same three apps, the same ribbon, the same options as the
+**Office and CAD, on your phone — the same applications, the same menus and the same options as the
 desktop, rebuilt lightweight for Android.**
 
-[English](README.md) · [فارسی](README.fa.md) · [Write](Write/README.md) · [Tables](Tables/README.md) · [Slides](Slides/README.md)
+[English](README.md) · [فارسی](README.fa.md) · [Write](Write/README.md) · [Tables](Tables/README.md) · [Slides](Slides/README.md) · [Draw](Draw/README.md)
 
 ![Platform: Android 10+](https://img.shields.io/badge/Android-10%2B%20(arm64)-3ddc84?style=flat-square&logo=android&logoColor=white)
 ![Written in Rust](https://img.shields.io/badge/written%20in-Rust-b7410e?style=flat-square&logo=rust&logoColor=white)
 ![License: MIT](https://img.shields.io/badge/license-MIT-blue?style=flat-square)
-![Version 1.0.2](https://img.shields.io/badge/version-1.0.2-2b47b5?style=flat-square)
+![Version 1.0.3](https://img.shields.io/badge/version-1.0.3-2b47b5?style=flat-square)
 ![No account](https://img.shields.io/badge/account-none-2ea44f?style=flat-square)
 ![No network permission](https://img.shields.io/badge/network%20permission-none-2ea44f?style=flat-square)
 
 **Download — direct APK links:**
-[**Rustina Write** · 18.3 MB](https://github.com/RustinaCo/Office/raw/v1.0.2/apk/Rustina-Write-1.0.2.apk) ·
-[**Rustina Tables** · 9.4 MB](https://github.com/RustinaCo/Office/raw/v1.0.2/apk/Rustina-Tables-1.0.2.apk) ·
-[**Rustina Slides** · 12.8 MB](https://github.com/RustinaCo/Office/raw/v1.0.2/apk/Rustina-Slides-1.0.2.apk)
+[**Rustina Write** · 18.3 MB](https://github.com/RustinaCo/Office/raw/v1.0.3/apk/Rustina-Write-1.0.2.apk) ·
+[**Rustina Tables** · 9.4 MB](https://github.com/RustinaCo/Office/raw/v1.0.3/apk/Rustina-Tables-1.0.2.apk) ·
+[**Rustina Slides** · 12.8 MB](https://github.com/RustinaCo/Office/raw/v1.0.3/apk/Rustina-Slides-1.0.2.apk) ·
+[**Rustina Draw** · 13.6 MB](https://github.com/RustinaCo/Office/raw/v1.0.3/apk/Rustina-Draw-0.9.0.apk)
 
 </div>
 
@@ -29,7 +30,7 @@ desktop, rebuilt lightweight for Android.**
   you and your file.
 - **No ads, no telemetry, and no network permission at all.** Android will not let these apps phone
   home, because they never ask for the permission.
-- **Small.** 18.3 MB / 9.4 MB / 12.8 MB per app, fonts included — a fraction of the size of the
+- **Small.** 18.3 MB / 9.4 MB / 12.8 MB for the office apps and 13.6 MB for Draw, fonts included — a fraction of the size of the
   mainstream suites.
 - **It opens the real files.** `.docx`, `.xlsx`, `.pptx` and friends open, edit and save back in the
   same format — the work you already have on your computer opens here.
@@ -52,11 +53,11 @@ desktop, rebuilt lightweight for Android.**
   the desktop versions (Linux, macOS, Windows, BSD) and the web.
 - **Android 10 (API 29) or newer, arm64-v8a**, side-loaded, no Play Store account needed.
 
-## The three apps
+## The apps
 
-One engine, one UI, three apps. The Android build reuses the *same* desktop front end — ribbon, tabs,
-dialogs and every option — laid out for a touch screen. Nothing here is a stripped-down "mobile
-edition".
+Three office apps on one engine and one UI, plus a CAD seat on a fourth. Every Android build reuses
+the *same* desktop front end — ribbon or menus, tabs, dialogs and every option — laid out for a touch
+screen. Nothing here is a stripped-down "mobile edition".
 
 <div align="center">
 
@@ -88,6 +89,9 @@ edition".
   full-screen slide show with presenter view and a pen, rehearse timings. Opens and saves `.pptx`;
   exports PDF (slides, notes pages, handouts), PNG/JPEG and outlines. *In alpha — the features are
   there, expect rough edges.*
+- **[Rustina Draw](Draw/README.md) — drawings.** The ArtCraft team's CADCraft: 2D drafting with the
+  command line, object snaps, layers, dimensions, hatches, blocks and DXF/DWG files, at phone size.
+  *Pre-alpha preview — its README says exactly what is and is not there yet.*
 
 More screenshots, page by page, in each app's own README —
 [Write](Write/README.md) · [Tables](Tables/README.md) · [Slides](Slides/README.md).
@@ -117,12 +121,14 @@ your Android version — and it gets fixed quickly.
 
 1. Download the APK you want — these links download the file straight away, no release page needed:
    - **Rustina Write** (documents, 18.3 MB) —
-     [Rustina-Write-1.0.2.apk](https://github.com/RustinaCo/Office/raw/v1.0.2/apk/Rustina-Write-1.0.2.apk)
+     [Rustina-Write-1.0.2.apk](https://github.com/RustinaCo/Office/raw/v1.0.3/apk/Rustina-Write-1.0.2.apk)
    - **Rustina Tables** (spreadsheets, 9.4 MB) —
-     [Rustina-Tables-1.0.2.apk](https://github.com/RustinaCo/Office/raw/v1.0.2/apk/Rustina-Tables-1.0.2.apk)
+     [Rustina-Tables-1.0.2.apk](https://github.com/RustinaCo/Office/raw/v1.0.3/apk/Rustina-Tables-1.0.2.apk)
    - **Rustina Slides** (presentations, 12.8 MB) —
-     [Rustina-Slides-1.0.2.apk](https://github.com/RustinaCo/Office/raw/v1.0.2/apk/Rustina-Slides-1.0.2.apk)
-   (All three also live in [`apk/`](apk), with their SHA-256 checksums.)
+     [Rustina-Slides-1.0.2.apk](https://github.com/RustinaCo/Office/raw/v1.0.3/apk/Rustina-Slides-1.0.2.apk)
+   - **Rustina Draw** (CAD, 13.6 MB) —
+     [Rustina-Draw-0.9.0.apk](https://github.com/RustinaCo/Office/raw/v1.0.3/apk/Rustina-Draw-0.9.0.apk)
+   (All four also live in [`apk/`](apk), with their SHA-256 checksums.)
 2. Open it on the phone and allow installing from this source when Android asks.
 3. That's it — no account, no ads, no telemetry, no network permission.
 
