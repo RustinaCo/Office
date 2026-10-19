@@ -38,7 +38,9 @@ phone size.
   `BLOCK`, `INSERT` and the rest — with prompts, keyword options, `@dx,dy`, `@d<a` and direct
   distance entry. A floating keyboard button raises Android's own keyboard (suggestions and
   dictation included) over the drawing.
-- **Files.** DXF opens and saves, DWG opens, and the engine's own drawings round-trip. Open and save
+- **Files.** DXF opens and saves, DWG opens through the engine's importer (the subset of DWG the
+  engine models, not every object a desktop CAD seat writes), and the engine's own drawings
+  round-trip. Open and save
   go through Android's file picker, so Google Drive, OneDrive, Dropbox, Nextcloud, a NAS or a USB
   stick all work — without a network permission.
 - **Drafting aids.** Object snaps (endpoint, midpoint, centre, intersection, perpendicular, tangent,
