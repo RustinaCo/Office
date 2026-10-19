@@ -40,9 +40,11 @@ desktop, rebuilt lightweight for Android.**
   no "share to the app, edit, share back".
 - **The whole desktop, not a mobile cut-down.** The same ribbon tabs, the same dialogs and the same
   options as the desktop apps; if you know Word, Excel or PowerPoint, you already know these.
-- **Persian and English, done properly.** A translated interface (Persian and English first), 22
-  open-licensed Persian/Arabic font families and five metric-compatible Latin ones compiled in, and
-  right-to-left text laid out correctly.
+- **Persian written properly; the interface is English.** Persian, Arabic and Urdu *documents* are
+  first-class — right-to-left paragraphs, correct letter joining and bidirectional runs — with 22
+  open-licensed Persian/Arabic font families and five metric-compatible Latin ones compiled in. The
+  interface itself is English today (Write follows your system language across 19 translations, Tables
+  10, Slides English for now); a Persian interface is the first thing on the list — see Contributing.
 - **Fonts: bring your own, too.** **Add Font…** in Options takes any family already on your phone —
   B Nazanin, B Titr, B Yekan, IRANSans and the rest — and puts it in the font list of Write, Tables
   and Slides, alongside the 27 bundled families.
@@ -182,7 +184,9 @@ licence texts: [`CREDITS.md`](CREDITS.md).
 Contributions are very welcome — this is a young fork of a big codebase:
 
 - **Bug reports** with the phone model, the Android version and what you did.
-- **Translations** (the interface is translated; Persian and English come first).
+- **Translations** — a Persian interface above all. The interface follows the system language wherever
+  a translation ships (19 languages in Write, 10 in Tables, English only in Slides today); Persian is
+  the one we want most, and a translated menu is the fastest way to help.
 - **Fonts**: more open-licensed families for Persian, Arabic, Urdu and the other scripts.
 - **Pull requests**: please keep the desktop layout working, and add a test or a screenshot with the
   change.
