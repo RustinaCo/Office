@@ -1,0 +1,78 @@
+[workspace]
+resolver = "3"
+members = ["crates/*", "apps/*", "xtask"]
+# default-members
+
+[workspace.package]
+version = "0.9.0"
+edition = "2024"
+license = "MIT OR Apache-2.0"
+rust-version = "1.90"
+repository = "https://github.com/storytold/cadcraft"
+
+[workspace.dependencies]
+# internal
+cadcraft-geom = { path = "crates/geom" }
+cadcraft-dxf = { path = "crates/dxf" }
+cadcraft-dwg = { path = "crates/dwg" }
+cadcraft-color = { path = "crates/color" }
+cadcraft-doc = { path = "crates/doc" }
+cadcraft-constraints = { path = "crates/constraints" }
+cadcraft-fonts = { path = "crates/fonts" }
+cadcraft-render = { path = "crates/render" }
+cadcraft-io = { path = "crates/io" }
+cadcraft-engine = { path = "crates/engine" }
+cadcraft-ui-egui = { path = "crates/ui-egui" }
+cadcraft-mcp = { path = "crates/mcp" }
+# Which paths stored in a drawing (xrefs, data links) may be opened.
+craft-docpath = { version = "0.1.0", git = "https://github.com/storytold/craft-libs", rev = "82a24b006eefa036b43c09a67fb9a3fbd17ffe63" }
+
+# foundation
+thiserror = "2"
+serde = { version = "1", features = ["derive", "rc"] }
+serde_json = { version = "1", features = ["float_roundtrip"] }
+log = "0.4"
+rayon = "1"
+
+# rendering / formats
+tiny-skia = { version = "0.11", default-features = false, features = ["std", "simd", "png-format"] }
+lyon_tessellation = "1.0.22"
+skrifa = "0.47"
+# Text shaping (OpenType GSUB/GPOS, HarfBuzz port on read-fonts; the version egui's epaint uses)
+# and the Unicode Bidirectional Algorithm for right-to-left drawing text.
+harfrust = "0.12"
+unicode-bidi = "0.3.18"
+image = { version = "0.25", default-features = false, features = ["png", "jpeg"] }
+encoding_rs = "0.8.35"
+# XML for the SVG reader (streaming parser, no entity expansion beyond the five predefined ones)
+quick-xml = "0.41"
+
+# ui
+craft-ui = { version = "0.1.0", git = "https://github.com/storytold/craft-libs", rev = "5c874d51eeb3de70e735c8ce87a59a7dedd47675", features = ["serde"] }
+egui = "0.36"
+egui_kittest = "0.36"
+eframe = { version = "0.36", default-features = false }
+egui-wgpu = "0.36"
+rfd = "0.17"
+arboard = { version = "3.6", default-features = false }
+
+[workspace.lints.rust]
+unsafe_code = "forbid"
+
+[workspace.lints.clippy]
+dbg_macro = "warn"
+todo = "warn"
+too_many_arguments = "allow"
+type_complexity = "allow"
+
+[profile.dev.package."*"]
+opt-level = 2
+
+[profile.dev]
+opt-level = 1
+
+[profile.release]
+opt-level = 3
+lto = "thin"
+codegen-units = 16
+debug = 0

@@ -1,0 +1,3 @@
+# Let shellcheck follow `. "$(dirname ...)/../env.sh"` relative to each script.
+source-path=SCRIPTDIR
+external-sources=true

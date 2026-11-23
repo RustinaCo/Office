@@ -1,0 +1,25 @@
+[package]
+name = "deckcraft-media"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+description = "DeckCraft media: probing, audio decoding (MP3, AAC/M4A, WAV, AIFF, FLAC, ALAC, Vorbis, Opus) to f32 PCM, H.264/HEVC/VP9/AV1 video decoding, poster frames, trim/fade/volume and the playback mixer and clock"
+
+[lints]
+workspace = true
+
+[dependencies]
+deckcraft-isobmff = { workspace = true }
+deckcraft-matroska = { workspace = true }
+deckcraft-ogg = { workspace = true }
+deckcraft-opus = { workspace = true }
+deckcraft-h264 = { workspace = true }
+deckcraft-hevc = { workspace = true }
+deckcraft-vp9 = { workspace = true }
+deckcraft-av1 = { workspace = true }
+thiserror = { workspace = true }
+log = { workspace = true }
+image = { workspace = true }
+# Audio decoding for the formats we have no decoder of our own for (MPL-2.0, used unmodified,
+# as in FilmCraft).
+symphonia = { version = "0.5.5", default-features = false, features = ["aac", "adpcm", "alac", "flac", "mp1", "mp2", "mp3", "pcm", "vorbis", "wav", "aiff", "caf", "ogg", "mkv", "isomp4"] }

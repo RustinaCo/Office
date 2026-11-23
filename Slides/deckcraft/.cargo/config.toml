@@ -1,0 +1,7 @@
+# Local development builds embed the craft-fonts checkout next to this repo when it exists
+# (build.rs warns and continues without it). CI and releases set CRAFT_FONTS_DIR explicitly.
+[env]
+CRAFT_FONTS_DIR = { value = "../craft-fonts", relative = true }
+
+[alias]
+xtask = "run --package xtask --"
