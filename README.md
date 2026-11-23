@@ -4,9 +4,9 @@
 
 **Full-Featured Desktop Office Suite, Rebuilt Lightweight in Rust for Android.**
 
-Word Processor · Spreadsheet · Presentations · CAD
+Word Processor · Spreadsheet · Presentations
 
-[English](README.md) · [فارسی](README.fa.md) · [Write](Write/README.md) · [Tables](Tables/README.md) · [Slides](Slides/README.md) · [Draw](Draw/README.md)
+[English](README.md) · [فارسی](README.fa.md) · [Write](Write/README.md) · [Tables](Tables/README.md) · [Slides](Slides/README.md)
 
 [![Platform: Android 10+](https://img.shields.io/badge/Android-10%2B%20(arm64)-3ddc84?style=for-the-badge&logo=android&logoColor=white)](https://github.com/RustinaCo/Office/releases)
 [![Written in Rust](https://img.shields.io/badge/written%20in-Rust-b7410e?style=for-the-badge&logo=rust&logoColor=white)](https://www.rust-lang.org/)
@@ -76,7 +76,6 @@ Word Processor · Spreadsheet · Presentations · CAD
 - **[Rustina Write](Write/README.md)**: Styles, complete paragraph and page formatting, tables, columns, headers, footers, footnotes, comments, track changes, find & replace, navigation pane, table of contents, citations, and CSV mail merge.
 - **[Rustina Tables](Tables/README.md)**: Cell styles, number formatting, conditional formatting, borders/fills, freeze panes, merge cells, fill handle, auto-filters, dependency-graph formula engine with **500+ functions**, dynamic arrays (`LET`, `LAMBDA`, `MAP`, `REDUCE`, `SCAN`), PivotTables, and 17 chart types.
 - **[Rustina Slides](Slides/README.md)**: Slide masters, 11 layouts, 8 themes, sections, presenter notes, 150+ shapes, connectors, freeform drawing, gradient fills, transitions (including Morph), animations, and presenter view.
-- **[Rustina Draw](Draw/README.md)**: 2D drafting with command line, object snaps, layers, dimensions, hatches, blocks, and DXF/DWG support at phone scale.
 
 ---
 

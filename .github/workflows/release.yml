@@ -1,0 +1,99 @@
+name: Release Android APKs
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build-and-release:
+    name: Build & Release ARM64 APKs
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Rust Toolchain
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: aarch64-linux-android
+
+      - name: Setup Java 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Install Android NDK
+        run: |
+          yes | sdkmanager --install "ndks;27.0.12077973"
+          echo "ANDROID_NDK_HOME=$ANDROID_HOME/ndk/27.0.12077973" >> $GITHUB_ENV
+          echo "NDK_HOME=$ANDROID_HOME/ndk/27.0.12077973" >> $GITHUB_ENV
+
+      - name: Cache Cargo Dependencies
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cargo/bin/cargo-apk
+            ~/.cargo/registry/index/
+            ~/.cargo/registry/cache/
+            ~/.cargo/git/db/
+            target/
+          key: ${{ runner.os }}-cargo-apk-${{ hashFiles('**/Cargo.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-cargo-apk-
+
+      - name: Install cargo-apk
+        run: |
+          if ! command -v cargo-apk &> /dev/null; then
+            cargo install cargo-apk
+          fi
+
+      - name: Build Rustina Tables APK
+        run: |
+          cd Tables/grid-android
+          cargo apk build --release --lib
+          mkdir -p ../../dist
+          cp $(find target -name "*.apk" -type f | head -n 1) ../../dist/RustinaTables-${{ github.ref_name }}.apk
+
+      - name: Build Rustina Write APK
+        run: |
+          cd Write/word-android
+          cargo apk build --release --lib
+          mkdir -p ../../dist
+          cp $(find target -name "*.apk" -type f | head -n 1) ../../dist/RustinaWrite-${{ github.ref_name }}.apk
+
+      - name: Build Rustina Slides APK
+        run: |
+          cd Slides/deck-android
+          cargo apk build --release --lib
+          mkdir -p ../../dist
+          cp $(find target -name "*.apk" -type f | head -n 1) ../../dist/RustinaSlides-${{ github.ref_name }}.apk
+
+      - name: Verify Built APKs
+        run: |
+          ls -lh dist/
+
+      - name: Publish GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ github.ref_name }}
+          name: Rustina Office ${{ github.ref_name }}
+          body_path: README.md
+          draft: false
+          prerelease: false
+          files: |
+            dist/RustinaTables-*.apk
+            dist/RustinaWrite-*.apk
+            dist/RustinaSlides-*.apk
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

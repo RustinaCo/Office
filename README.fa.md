@@ -4,9 +4,9 @@
 
 **مجموعه آفیس قدرتمند دسکتاپ، بازنویسی‌شده با زبان راست (Rust) و بهینه‌سازی‌شده برای اندروید.**
 
-واژه‌پرداز (Write) · صفحه‌گسترده (Tables) · اسلاید و ارائه (Slides) · نقشه‌کشی (Draw)
+واژه‌پرداز (Write) · صفحه‌گسترده (Tables) · اسلاید و ارائه (Slides)
 
-[English](README.md) · [فارسی](README.fa.md) · [Write](Write/README.md) · [Tables](Tables/README.md) · [Slides](Slides/README.md) · [Draw](Draw/README.md)
+[English](README.md) · [فارسی](README.fa.md) · [Write](Write/README.md) · [Tables](Tables/README.md) · [Slides](Slides/README.md)
 
 [![Platform: Android 10+](https://img.shields.io/badge/Android-10%2B%20(arm64)-3ddc84?style=for-the-badge&logo=android&logoColor=white)](https://github.com/RustinaCo/Office/releases)
 [![Written in Rust](https://img.shields.io/badge/written%20in-Rust-b7410e?style=for-the-badge&logo=rust&logoColor=white)](https://www.rust-lang.org/)
@@ -77,7 +77,6 @@
 - **[Rustina Write](Write/README.md) — اسناد:** استایل‌ها، قالب‌بندی پاراگراف، جداول، سرصفحه و پاصفحه، رد تغییرات (Track Changes)، فرمول‌ها، تصاویر و اشکال، و خروجی مستقیم PDF.
 - **[Rustina Tables](Tables/README.md) — اکسل و جداول:** استایل سلول‌ها، قالب عددی، فرمت‌های شرطی، فیلترها، گراف محاسباتی با **بیش از ۵۰۰ تابع**، آرایه‌های پویا، جدول محوری (PivotTable) و ۱۷ نوع نمودار.
 - **[Rustina Slides](Slides/README.md) — ارائه:** اسلایدهای مادر، تم‌های متنوع، اشکال هندسی، گرادیان، انیمیشن‌ها و ترنزیشن‌ها (شامل Morph)، و حالت نمایش مجری.
-- **[Rustina Draw](Draw/README.md) — نقشه‌کشی:** ترسیمات دوبعدی مهندسی، اسنپ‌ها، لایه‌بندی، اندازه‌گذاری و پشتیبانی از فایل‌های DXF/DWG در ابعاد موبایل.
 
 ---
 

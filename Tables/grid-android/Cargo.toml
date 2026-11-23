@@ -86,5 +86,5 @@ name = ".FilePickerActivity"
 exported = false
 
 [package.metadata.android.signing.release]
-path = "/home/sina/.android/debug.keystore"
+path = "../../release.keystore"
 keystore_password = "android"
